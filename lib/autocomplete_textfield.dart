@@ -16,14 +16,20 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   StringCallback textChanged;
   AutoCompleteOverlayItemBuilder<T> itemBuilder;
   int suggestionsAmount;
+  GlobalKey<AutoCompleteTextFieldState<T>> key;
 
   AutoCompleteTextField(
-      {@required this.suggestions,
+      {@required this.key,
+        @required this.suggestions,
         @required this.textChanged,
         @required this.itemBuilder,
         @required this.itemSorter,
         @required this.itemFilter,
-        this.suggestionsAmount : 5});
+        this.suggestionsAmount : 5}) : super(key: key);
+
+  void clear() {
+    key.currentState.textField.controller.clear();
+  }
 
   @override
   State<StatefulWidget> createState() => new AutoCompleteTextFieldState<T>(
