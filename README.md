@@ -24,3 +24,5 @@ itemFilter: (item, query) {
   return item.toLowerCase().startsWith(query.toLowerCase());
 }
 `
+
+![](textfield-demo.gif)
