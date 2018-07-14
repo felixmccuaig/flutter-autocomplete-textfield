@@ -34,7 +34,14 @@
       <excludeFolder url="file://$MODULE_DIR$/example/android/gradle/wrapper/packages" />
       <excludeFolder url="file://$MODULE_DIR$/example/android/packages" />
       <excludeFolder url="file://$MODULE_DIR$/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/example/ios/Flutter/App.framework/packages" />
+      <excludeFolder url="file://$MODULE_DIR$/example/ios/Flutter/Flutter.framework/Headers/packages" />
+      <excludeFolder url="file://$MODULE_DIR$/example/ios/Flutter/Flutter.framework/Modules/packages" />
+      <excludeFolder url="file://$MODULE_DIR$/example/ios/Flutter/Flutter.framework/packages" />
+      <excludeFolder url="file://$MODULE_DIR$/example/ios/Flutter/flutter_assets/fonts/packages" />
+      <excludeFolder url="file://$MODULE_DIR$/example/ios/Flutter/flutter_assets/packages" />
       <excludeFolder url="file://$MODULE_DIR$/example/ios/Flutter/packages" />
+      <excludeFolder url="file://$MODULE_DIR$/example/ios/Frameworks/packages" />
       <excludeFolder url="file://$MODULE_DIR$/example/ios/Runner.xcodeproj/packages" />
       <excludeFolder url="file://$MODULE_DIR$/example/ios/Runner.xcodeproj/project.xcworkspace/packages" />
       <excludeFolder url="file://$MODULE_DIR$/example/ios/Runner.xcodeproj/xcshareddata/packages" />

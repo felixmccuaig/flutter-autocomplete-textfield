@@ -13,19 +13,30 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   List<T> suggestions;
   Filter<T> itemFilter;
   Comparator<T> itemSorter;
-  StringCallback textChanged;
+  StringCallback textChanged, textSubmitted;
   AutoCompleteOverlayItemBuilder<T> itemBuilder;
   int suggestionsAmount;
   GlobalKey<AutoCompleteTextFieldState<T>> key;
 
+  InputDecoration decoration;
+  TextStyle style;
+  TextInputAction textInputAction;
+  TextInputType keyboardType;
+
   AutoCompleteTextField(
-      {@required this.key,
-        @required this.suggestions,
-        @required this.textChanged,
-        @required this.itemBuilder,
-        @required this.itemSorter,
-        @required this.itemFilter,
-        this.suggestionsAmount : 5}) : super(key: key);
+      {this.style,
+      this.decoration: const InputDecoration(),
+      this.textChanged,
+      this.textSubmitted,
+      this.textInputAction: TextInputAction.done,
+      this.keyboardType: TextInputType.text,
+      @required this.key,
+      @required this.suggestions,
+      @required this.itemBuilder,
+      @required this.itemSorter,
+      @required this.itemFilter,
+      this.suggestionsAmount: 5})
+      : super(key: key);
 
   void clear() {
     key.currentState.textField.controller.clear();
@@ -33,13 +44,23 @@ class AutoCompleteTextField<T> extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => new AutoCompleteTextFieldState<T>(
-      suggestions, textChanged, itemBuilder, itemSorter, itemFilter, suggestionsAmount);
+      suggestions,
+      textChanged,
+      textSubmitted,
+      itemBuilder,
+      itemSorter,
+      itemFilter,
+      suggestionsAmount,
+      decoration,
+      style,
+      textInputAction,
+      keyboardType);
 }
 
 class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   TextField textField;
   List<T> suggestions;
-  StringCallback textChanged;
+  StringCallback textChanged, textSubmitted;
   AutoCompleteOverlayItemBuilder<T> itemBuilder;
   Comparator<T> itemSorter;
   OverlayEntry listSuggestionsEntry;
@@ -47,18 +68,35 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   Filter<T> itemFilter;
   int suggestionsAmount;
 
-  AutoCompleteTextFieldState(this.suggestions, this.textChanged,
-      this.itemBuilder, this.itemSorter, this.itemFilter, this.suggestionsAmount) {
+  AutoCompleteTextFieldState(
+      this.suggestions,
+      this.textChanged,
+      this.textSubmitted,
+      this.itemBuilder,
+      this.itemSorter,
+      this.itemFilter,
+      this.suggestionsAmount,
+      InputDecoration decoration,
+      TextStyle style,
+      TextInputAction textInputAction,
+      TextInputType keyboardType) {
     textField = new TextField(
+      decoration: decoration,
+      style: style,
+      textInputAction: textInputAction,
+      keyboardType: keyboardType,
       focusNode: new FocusNode(),
       controller: new TextEditingController(),
       onChanged: (newText) {
         textChanged(newText);
         updateOverlay(newText);
       },
+      onSubmitted: (submittedText) {
+        textSubmitted(submittedText);
+      },
     );
     textField.focusNode.addListener(() {
-      if(!textField.focusNode.hasFocus) {
+      if (!textField.focusNode.hasFocus) {
         filteredSuggestions = [];
       }
     });
@@ -89,28 +127,28 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
                 width: width,
                 child: new Card(
                     child: new Column(
-                      children: filteredSuggestions.map((suggestion) {
-                        return new Row(children: [
-                          new Expanded(
-                              child: new InkWell(
-                                  child: itemBuilder(context, suggestion),
-                                  onTap: () {
-                                    setState(() {
-                                      String newText = suggestion.toString();
-                                      textField.controller.text = newText;
-                                      textField.focusNode.unfocus();
-                                      textChanged(newText);
-                                    });
-                                  }))
-                        ]);
-                      }).toList(),
-                    ))));
+                  children: filteredSuggestions.map((suggestion) {
+                    return new Row(children: [
+                      new Expanded(
+                          child: new InkWell(
+                              child: itemBuilder(context, suggestion),
+                              onTap: () {
+                                setState(() {
+                                  String newText = suggestion.toString();
+                                  textField.controller.text = newText;
+                                  textField.focusNode.unfocus();
+                                  textChanged(newText);
+                                });
+                              }))
+                    ]);
+                  }).toList(),
+                ))));
       });
       Overlay.of(context).insert(listSuggestionsEntry);
     }
 
-    filteredSuggestions =
-        getSuggestions(suggestions, itemSorter, itemFilter, suggestionsAmount, query);
+    filteredSuggestions = getSuggestions(
+        suggestions, itemSorter, itemFilter, suggestionsAmount, query);
     listSuggestionsEntry.markNeedsBuild();
   }
 
