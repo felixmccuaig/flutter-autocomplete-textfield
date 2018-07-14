@@ -8,3 +8,14 @@ build/
 ios/.generated/
 ios/Flutter/Generated.xcconfig
 ios/Runner/GeneratedPluginRegistrant.*
+
+example/.DS_Store
+example/.dart_tool/
+example/.packages
+example/.pub/
+example/build/
+example/.flutter-plugins
+
+example/ios/.generated/
+example/ios/Flutter/Generated.xcconfig
+example/ios/Runner/GeneratedPluginRegistrant.*
