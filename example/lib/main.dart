@@ -29,6 +29,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     var textField = new AutoCompleteTextField<String>(
+        decoration: new InputDecoration(
+            hintText: "Search Item",
+            border: new OutlineInputBorder(
+                gapPadding: 0.0, borderRadius: new BorderRadius.circular(16.0)),
+            suffixIcon: new Icon(Icons.search)),
         key: key,
         suggestions: [
           "Apple",
