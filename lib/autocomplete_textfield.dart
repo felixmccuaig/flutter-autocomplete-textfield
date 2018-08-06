@@ -20,7 +20,6 @@ class AutoCompleteTextField<T> extends StatefulWidget {
 
   InputDecoration decoration;
   TextStyle style;
-  TextInputAction textInputAction;
   TextInputType keyboardType;
 
   AutoCompleteTextField(
@@ -28,7 +27,6 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.decoration: const InputDecoration(),
       this.textChanged,
       this.textSubmitted,
-      this.textInputAction: TextInputAction.done,
       this.keyboardType: TextInputType.text,
       @required this.key,
       @required this.suggestions,
@@ -53,7 +51,6 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       suggestionsAmount,
       decoration,
       style,
-      textInputAction,
       keyboardType);
 }
 
@@ -78,12 +75,10 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.suggestionsAmount,
       InputDecoration decoration,
       TextStyle style,
-      TextInputAction textInputAction,
       TextInputType keyboardType) {
     textField = new TextField(
       decoration: decoration,
       style: style,
-      textInputAction: textInputAction,
       keyboardType: keyboardType,
       focusNode: new FocusNode(),
       controller: new TextEditingController(),
