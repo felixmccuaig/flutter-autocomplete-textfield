@@ -30,11 +30,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     var textField = new AutoCompleteTextField<String>(
         decoration: new InputDecoration(
-            hintText: "Search Item",
-            border: new OutlineInputBorder(
-                gapPadding: 0.0, borderRadius: new BorderRadius.circular(16.0)),
-            suffixIcon: new Icon(Icons.search)),
+          hintText: "Search Item",
+        ),
         key: key,
+        submitOnSuggestionTap: false,
+        clearOnSubmit: false,
         suggestions: [
           "Apple",
           "Armidillo",
@@ -69,8 +69,16 @@ class _MyHomePageState extends State<MyHomePage> {
           "Yam",
           "Zest"
         ],
+        textInputAction: TextInputAction.go,
         textChanged: (item) {
           currentText = item;
+        },
+        textSubmitted: (item) {
+          setState(() {
+            currentText = item;
+            added.add(currentText);
+            currentText = "";
+          });
         },
         itemBuilder: (context, item) {
           return new Padding(
@@ -90,8 +98,11 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: new Icon(Icons.add),
               onPressed: () {
                 setState(() {
-                  added.add(currentText);
-                  textField.clear();
+                  if (currentText != "") {
+                    added.add(currentText);
+                    textField.clear();
+                    currentText = "";
+                  }
                 });
               }))
     ]);

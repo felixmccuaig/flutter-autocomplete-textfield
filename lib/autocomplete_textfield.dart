@@ -17,10 +17,12 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   AutoCompleteOverlayItemBuilder<T> itemBuilder;
   int suggestionsAmount;
   GlobalKey<AutoCompleteTextFieldState<T>> key;
+  bool submitOnSuggestionTap, clearOnSubmit;
 
   InputDecoration decoration;
   TextStyle style;
   TextInputType keyboardType;
+  TextInputAction textInputAction;
 
   AutoCompleteTextField(
       {this.style,
@@ -33,11 +35,14 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       @required this.itemBuilder,
       @required this.itemSorter,
       @required this.itemFilter,
-      this.suggestionsAmount: 5})
+      this.suggestionsAmount: 5,
+      this.submitOnSuggestionTap: true,
+      this.clearOnSubmit: true,
+      this.textInputAction: TextInputAction.done})
       : super(key: key);
 
   void clear() {
-    key.currentState.textField.controller.clear();
+    key.currentState.clear();
   }
 
   @override
@@ -49,9 +54,12 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       itemSorter,
       itemFilter,
       suggestionsAmount,
+      submitOnSuggestionTap,
+      clearOnSubmit,
       decoration,
       style,
-      keyboardType);
+      keyboardType,
+      textInputAction);
 }
 
 class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
@@ -64,6 +72,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   List<T> filteredSuggestions;
   Filter<T> itemFilter;
   int suggestionsAmount;
+  bool submitOnSuggestionTap, clearOnSubmit;
 
   AutoCompleteTextFieldState(
       this.suggestions,
@@ -73,21 +82,29 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.itemSorter,
       this.itemFilter,
       this.suggestionsAmount,
+      this.submitOnSuggestionTap,
+      this.clearOnSubmit,
       InputDecoration decoration,
       TextStyle style,
-      TextInputType keyboardType) {
+      TextInputType keyboardType,
+      TextInputAction textInputAction) {
     textField = new TextField(
       decoration: decoration,
       style: style,
       keyboardType: keyboardType,
       focusNode: new FocusNode(),
       controller: new TextEditingController(),
+      textInputAction: textInputAction,
       onChanged: (newText) {
         textChanged(newText);
         updateOverlay(newText);
       },
       onSubmitted: (submittedText) {
         textSubmitted(submittedText);
+        print(submittedText);
+        if (clearOnSubmit) {
+          clear();
+        }
       },
     );
     textField.focusNode.addListener(() {
@@ -95,6 +112,11 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
         filteredSuggestions = [];
       }
     });
+  }
+
+  void clear() {
+    textField.controller.clear();
+    updateOverlay("");
   }
 
   void updateOverlay(String query) {
@@ -129,10 +151,19 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
                               child: itemBuilder(context, suggestion),
                               onTap: () {
                                 setState(() {
-                                  String newText = suggestion.toString();
-                                  textField.controller.text = newText;
-                                  textField.focusNode.unfocus();
-                                  textChanged(newText);
+                                  if (submitOnSuggestionTap) {
+                                    String newText = suggestion.toString();
+                                    textField.controller.text = newText;
+                                    textField.focusNode.unfocus();
+                                    textSubmitted(newText);
+                                    if (clearOnSubmit) {
+                                      clear();
+                                    }
+                                  } else {
+                                    String newText = suggestion.toString();
+                                    textField.controller.text = newText;
+                                    textChanged(newText);
+                                  }
                                 });
                               }))
                     ]);
