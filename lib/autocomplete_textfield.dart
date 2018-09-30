@@ -23,6 +23,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   TextStyle style;
   TextInputType keyboardType;
   TextInputAction textInputAction;
+  TextCapitalization textCapitalization;
 
   AutoCompleteTextField(
       {this.style,
@@ -38,7 +39,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.suggestionsAmount: 5,
       this.submitOnSuggestionTap: true,
       this.clearOnSubmit: true,
-      this.textInputAction: TextInputAction.done})
+      this.textInputAction: TextInputAction.done,
+      this.textCapitalization: TextCapitalization.sentences})
       : super(key: key);
 
   void clear() {
@@ -56,6 +58,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       suggestionsAmount,
       submitOnSuggestionTap,
       clearOnSubmit,
+      textCapitalization,
       decoration,
       style,
       keyboardType,
@@ -84,11 +87,13 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.suggestionsAmount,
       this.submitOnSuggestionTap,
       this.clearOnSubmit,
+      TextCapitalization textCapitalization,
       InputDecoration decoration,
       TextStyle style,
       TextInputType keyboardType,
       TextInputAction textInputAction) {
     textField = new TextField(
+      textCapitalization: textCapitalization,
       decoration: decoration,
       style: style,
       keyboardType: keyboardType,
