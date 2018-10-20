@@ -8,7 +8,7 @@ A few bug fixes and more functionality added.
 
 Added textInputAction.
 
-## Braking Changes
+## Breaking Changes
 
  TextField is set by default to call onSubmitted on a suggestion tap and also to clear the TextField on submit.
 
@@ -22,3 +22,7 @@ Added textInputAction.
 Added the ability to update suggestions dynamically!
 
 Use updateSuggestions, addSuggestion and removeSuggestion.
+
+[1.5.1]
+
+Oops, spelling error.
