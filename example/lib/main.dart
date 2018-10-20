@@ -26,49 +26,53 @@ class _MyHomePageState extends State<MyHomePage> {
   String currentText = "";
   GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
 
+  List<String> suggestions = [
+    "Apple",
+    "Armidillo",
+    "Actual",
+    "Actuary",
+    "America",
+    "Argentina",
+    "Australia",
+    "Antarctica",
+    "Blueberry",
+    "Cheese",
+    "Danish",
+    "Eclair",
+    "Fudge",
+    "Granola",
+    "Hazelnut",
+    "Ice Cream",
+    "Jely",
+    "Kiwi Fruit",
+    "Lamb",
+    "Macadamia",
+    "Nachos",
+    "Oatmeal",
+    "Palm Oil",
+    "Quail",
+    "Rabbit",
+    "Salad",
+    "T-Bone Steak",
+    "Urid Dal",
+    "Vanilla",
+    "Waffles",
+    "Yam",
+    "Zest"
+  ];
+
+  AutoCompleteTextField textField;
+
   @override
   Widget build(BuildContext context) {
-    var textField = new AutoCompleteTextField<String>(
+    textField = new AutoCompleteTextField<String>(
         decoration: new InputDecoration(
           hintText: "Search Item",
         ),
         key: key,
-        submitOnSuggestionTap: false,
-        clearOnSubmit: false,
-        suggestions: [
-          "Apple",
-          "Armidillo",
-          "Actual",
-          "Actuary",
-          "America",
-          "Argentina",
-          "Australia",
-          "Antarctica",
-          "Blueberry",
-          "Cheese",
-          "Danish",
-          "Eclair",
-          "Fudge",
-          "Granola",
-          "Hazelnut",
-          "Ice Cream",
-          "Jely",
-          "Kiwi Fruit",
-          "Lamb",
-          "Macadamia",
-          "Nachos",
-          "Oatmeal",
-          "Palm Oil",
-          "Quail",
-          "Rabbit",
-          "Salad",
-          "T-Bone Steak",
-          "Urid Dal",
-          "Vanilla",
-          "Waffles",
-          "Yam",
-          "Zest"
-        ],
+        submitOnSuggestionTap: true,
+        clearOnSubmit: true,
+        suggestions: suggestions,
         textInputAction: TextInputAction.go,
         textChanged: (item) {
           currentText = item;
@@ -112,7 +116,33 @@ class _MyHomePageState extends State<MyHomePage> {
     }));
 
     return new Scaffold(
-        appBar: new AppBar(title: new Text('Auto Complete TextField Demo')),
+        appBar: new AppBar(
+            title: new Text('Auto Complete TextField Demo'),
+            actions: [
+              new IconButton(
+                  icon: new Icon(Icons.edit),
+                  onPressed: () => showDialog(
+                      builder: (_) {
+                        String text = "";
+
+                        return new AlertDialog(
+                            title: new Text("Change Suggestions"),
+                            content: new TextField(
+                                onChanged: (newText) => text = newText),
+                            actions: [
+                              new FlatButton(
+                                  onPressed: () {
+                                    if (text != "") {
+                                      suggestions.add(text);
+                                      textField.updateSuggestions(suggestions);
+                                    }
+                                    Navigator.pop(context);
+                                  },
+                                  child: new Text("Add")),
+                            ]);
+                      },
+                      context: context))
+            ]),
         body: body);
   }
 }

@@ -16,3 +16,9 @@ Added textInputAction.
 
 [1.4.1]
  Added textCapitalization option
+
+[1.5.0]
+
+Added the ability to update suggestions dynamically!
+
+Use updateSuggestions, addSuggestion and removeSuggestion.

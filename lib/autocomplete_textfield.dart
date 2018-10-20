@@ -47,6 +47,18 @@ class AutoCompleteTextField<T> extends StatefulWidget {
     key.currentState.clear();
   }
 
+  void addSuggestion(T suggestion) {
+    key.currentState.addSuggestion(suggestion);
+  }
+
+  void removeSuggestion(T suggestion) {
+    key.currentState.removeSuggestion(suggestion);
+  }
+
+  void updateSuggestions(List<T> suggestions) {
+    key.currentState.updateSuggestions(suggestions);
+  }
+
   @override
   State<StatefulWidget> createState() => new AutoCompleteTextFieldState<T>(
       suggestions,
@@ -77,6 +89,8 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   int suggestionsAmount;
   bool submitOnSuggestionTap, clearOnSubmit;
 
+  String currentText = "";
+
   AutoCompleteTextFieldState(
       this.suggestions,
       this.textChanged,
@@ -101,6 +115,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       controller: new TextEditingController(),
       textInputAction: textInputAction,
       onChanged: (newText) {
+        currentText = newText;
         textChanged(newText);
         updateOverlay(newText);
       },
@@ -122,6 +137,23 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   void clear() {
     textField.controller.clear();
     updateOverlay("");
+  }
+
+  void addSuggestion(T suggestion) {
+    suggestions.add(suggestion);
+    updateOverlay(currentText);
+  }
+
+  void removeSuggestion(T suggestion) {
+    suggestions.contains(suggestion)
+        ? suggestions.remove(suggestion)
+        : throw "List does not contain suggestion and therefore cannot be removed";
+    updateOverlay(currentText);
+  }
+
+  void updateSuggestions(List<T> suggestions) {
+    this.suggestions = suggestions;
+    updateOverlay(currentText);
   }
 
   void updateOverlay(String query) {
