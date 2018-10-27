@@ -6,7 +6,7 @@ An autocomplete textfield for flutter
  
  [Pub Package](https://pub.dartlang.org/packages/autocomplete_textfield#-example-tab-)
 
- ## Braking Changes
+ ## Breaking Changes
 
  TextField is set by default to call onSubmitted on a suggestion tap and also to clear the TextField on submit.
 
