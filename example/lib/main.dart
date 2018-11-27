@@ -128,6 +128,7 @@ class _FirstPageState extends State<FirstPage> {
     }));
 
     return new Scaffold(
+        resizeToAvoidBottomPadding: false,
         appBar: new AppBar(
             title: new Text('AutoComplete TextField Demo Simple'),
             actions: [
@@ -210,11 +211,14 @@ class _SecondPageState extends State<SecondPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
         title: new Text('AutoComplete TextField Demo Complex'),
       ),
       body: new Column(children: [
-        new Padding(child: textField, padding: EdgeInsets.all(16.0)),
+        new Padding(
+            child: new Container(child: textField),
+            padding: EdgeInsets.all(16.0)),
         new Padding(
             padding: EdgeInsets.fromLTRB(0.0, 64.0, 0.0, 0.0),
             child: new Card(

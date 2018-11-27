@@ -71,6 +71,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
     key.currentState.updateSuggestions(suggestions);
   }
 
+  get textField => key.currentState.textField;
+
   @override
   State<StatefulWidget> createState() => new AutoCompleteTextFieldState<T>(
       suggestions,

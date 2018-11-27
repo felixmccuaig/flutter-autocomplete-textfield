@@ -30,3 +30,7 @@ Oops, spelling error.
 [1.6.0]
 
 Fixed the non-string datatype issue.
+
+[1.6.1]
+
+Exposed textField
