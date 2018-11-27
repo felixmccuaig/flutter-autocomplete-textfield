@@ -1,12 +1,15 @@
 # autocomplete_textfield
 
 An autocomplete textfield for flutter
+
+# pull requests
+Feel free to submit pull requests!
  
  ## Pub Package Can Be Found At
  
  [Pub Package](https://pub.dartlang.org/packages/autocomplete_textfield#-example-tab-)
 
- ## Braking Changes
+ ## Breaking Changes
 
  TextField is set by default to call onSubmitted on a suggestion tap and also to clear the TextField on submit.
 
