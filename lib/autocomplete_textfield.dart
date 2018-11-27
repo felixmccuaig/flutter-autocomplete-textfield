@@ -46,8 +46,10 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.textChanged, //Callback on input text changed, this is a string
       this.textSubmitted, //Callback on input text submitted, this is also a string
       this.keyboardType: TextInputType.text,
-      this.suggestionsAmount: 5, //The amount of suggestions to show, larger values may result in them going off screen
-      this.submitOnSuggestionTap: true, //Call textSubmitted on suggestion tap, itemSubmitted will be called no matter what
+      this.suggestionsAmount:
+          5, //The amount of suggestions to show, larger values may result in them going off screen
+      this.submitOnSuggestionTap:
+          true, //Call textSubmitted on suggestion tap, itemSubmitted will be called no matter what
       this.clearOnSubmit: true, //Clear autoCompleteTextfield on submit
       this.textInputAction: TextInputAction.done,
       this.textCapitalization: TextCapitalization.sentences})
