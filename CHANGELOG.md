@@ -26,3 +26,7 @@ Use updateSuggestions, addSuggestion and removeSuggestion.
 [1.5.1]
 
 Oops, spelling error.
+
+[1.6.0]
+
+Fixed the non-string datatype issue.
