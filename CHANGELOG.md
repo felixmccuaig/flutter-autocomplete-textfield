@@ -34,3 +34,7 @@ Fixed the non-string datatype issue.
 [1.6.1]
 
 Exposed textField
+
+[1.6.2]
+
+Fixed example and new vid thing
