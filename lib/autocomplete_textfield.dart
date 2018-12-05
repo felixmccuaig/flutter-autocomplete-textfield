@@ -1,6 +1,7 @@
 library autocomplete_textfield;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 typedef Widget AutoCompleteOverlayItemBuilder<T>(
     BuildContext context, T suggestion);
@@ -21,6 +22,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   int suggestionsAmount;
   GlobalKey<AutoCompleteTextFieldState<T>> key;
   bool submitOnSuggestionTap, clearOnSubmit;
+  List<TextInputFormatter> inputFormatters;
 
   InputDecoration decoration;
   TextStyle style;
@@ -41,6 +43,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
           this.itemSorter, //Callback to sort items in the form (a of type <T>, b of type <T>)
       @required
           this.itemFilter, //Callback to filter item: return true or false depending on input text
+      this.inputFormatters,
       this.style,
       this.decoration: const InputDecoration(),
       this.textChanged, //Callback on input text changed, this is a string
@@ -71,7 +74,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
     key.currentState.updateSuggestions(suggestions);
   }
 
-  get textField => key.currentState.textField;
+  TextField get textField => key.currentState.textField;
 
   @override
   State<StatefulWidget> createState() => new AutoCompleteTextFieldState<T>(
@@ -85,6 +88,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       suggestionsAmount,
       submitOnSuggestionTap,
       clearOnSubmit,
+      inputFormatters,
       textCapitalization,
       decoration,
       style,
@@ -118,12 +122,14 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.suggestionsAmount,
       this.submitOnSuggestionTap,
       this.clearOnSubmit,
+      List<TextInputFormatter> inputFormatters,
       TextCapitalization textCapitalization,
       InputDecoration decoration,
       TextStyle style,
       TextInputType keyboardType,
       TextInputAction textInputAction) {
     textField = new TextField(
+      inputFormatters: inputFormatters,
       textCapitalization: textCapitalization,
       decoration: decoration,
       style: style,
@@ -301,6 +307,6 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
         return a.compareTo(b);
       }, (item, query) {
         return item.toLowerCase().startsWith(query.toLowerCase());
-      }, suggestionsAmount, submitOnSuggestionTap, clearOnSubmit,
+      }, suggestionsAmount, submitOnSuggestionTap, clearOnSubmit, [],
           textCapitalization, decoration, style, keyboardType, textInputAction);
 }

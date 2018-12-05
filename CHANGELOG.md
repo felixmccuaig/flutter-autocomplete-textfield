@@ -38,3 +38,6 @@ Exposed textField
 [1.6.2]
 
 Fixed example and new vid thing
+
+[1.6.4]
+Added input formatters.
