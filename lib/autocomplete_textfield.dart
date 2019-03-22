@@ -96,8 +96,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       style,
       keyboardType,
       textInputAction,
-      controller
-  );
+      controller);
 }
 
 class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
@@ -133,9 +132,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       TextStyle style,
       TextInputType keyboardType,
       TextInputAction textInputAction,
-      TextEditingController controller
-    ) {
-
+      TextEditingController controller) {
     textField = new TextField(
       inputFormatters: inputFormatters,
       textCapitalization: textCapitalization,
@@ -316,6 +313,15 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
         return a.compareTo(b);
       }, (item, query) {
         return item.toLowerCase().startsWith(query.toLowerCase());
-      }, suggestionsAmount, submitOnSuggestionTap, clearOnSubmit, [],
-          textCapitalization, decoration, style, keyboardType, textInputAction);
+      },
+          suggestionsAmount,
+          submitOnSuggestionTap,
+          clearOnSubmit,
+          [],
+          textCapitalization,
+          decoration,
+          style,
+          keyboardType,
+          textInputAction,
+          controller);
 }
