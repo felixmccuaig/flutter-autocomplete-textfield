@@ -172,7 +172,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 
   void clear() {
     textField.controller.clear();
-    updateOverlay("");
+    updateOverlay(null);
   }
 
   void addSuggestion(T suggestion) {
@@ -254,7 +254,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 
   List<T> getSuggestions(List<T> suggestions, Comparator<T> sorter,
       Filter<T> filter, int maxAmount, String query) {
-    if (query.length < minLength) {
+    if (null == query || query.length < minLength) {
       return [];
     }
 
