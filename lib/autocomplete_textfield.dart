@@ -172,7 +172,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 
   void clear() {
     textField.controller.clear();
-    updateOverlay(null);
+    updateOverlay();
   }
 
   void addSuggestion(T suggestion) {
@@ -192,7 +192,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
     updateOverlay(currentText);
   }
 
-  void updateOverlay(String query) {
+  void updateOverlay([String query]) {
     if (listSuggestionsEntry == null) {
       final RenderBox textFieldRenderBox = context.findRenderObject();
       final RenderBox overlay = Overlay.of(context).context.findRenderObject();
