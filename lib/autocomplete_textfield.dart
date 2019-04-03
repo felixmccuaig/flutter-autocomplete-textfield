@@ -29,6 +29,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   TextInputType keyboardType;
   TextInputAction textInputAction;
   TextCapitalization textCapitalization;
+  final TextEditingController controller;
 
   AutoCompleteTextField(
       {@required
@@ -55,7 +56,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
           true, //Call textSubmitted on suggestion tap, itemSubmitted will be called no matter what
       this.clearOnSubmit: true, //Clear autoCompleteTextfield on submit
       this.textInputAction: TextInputAction.done,
-      this.textCapitalization: TextCapitalization.sentences})
+      this.textCapitalization: TextCapitalization.sentences,
+      this.controller})
       : super(key: key);
 
   void clear() {
@@ -93,7 +95,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       decoration,
       style,
       keyboardType,
-      textInputAction);
+      textInputAction,
+      controller);
 }
 
 class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
@@ -108,6 +111,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   Filter<T> itemFilter;
   int suggestionsAmount;
   bool submitOnSuggestionTap, clearOnSubmit;
+  TextEditingController controller;
 
   String currentText = "";
 
@@ -127,7 +131,8 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       InputDecoration decoration,
       TextStyle style,
       TextInputType keyboardType,
-      TextInputAction textInputAction) {
+      TextInputAction textInputAction,
+      TextEditingController controller) {
     textField = new TextField(
       inputFormatters: inputFormatters,
       textCapitalization: textCapitalization,
@@ -135,9 +140,10 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       style: style,
       keyboardType: keyboardType,
       focusNode: new FocusNode(),
-      controller: new TextEditingController(),
+      controller: controller ?? new TextEditingController(),
       textInputAction: textInputAction,
       onChanged: (newText) {
+//        print('Autocomplete onChanged '+newText);
         currentText = newText;
         updateOverlay(newText);
 
@@ -307,6 +313,15 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
         return a.compareTo(b);
       }, (item, query) {
         return item.toLowerCase().startsWith(query.toLowerCase());
-      }, suggestionsAmount, submitOnSuggestionTap, clearOnSubmit, [],
-          textCapitalization, decoration, style, keyboardType, textInputAction);
+      },
+          suggestionsAmount,
+          submitOnSuggestionTap,
+          clearOnSubmit,
+          [],
+          textCapitalization,
+          decoration,
+          style,
+          keyboardType,
+          textInputAction,
+          controller);
 }
