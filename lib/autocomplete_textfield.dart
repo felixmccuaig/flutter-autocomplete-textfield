@@ -17,6 +17,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   Filter<T> itemFilter;
   Comparator<T> itemSorter;
   StringCallback textChanged, textSubmitted;
+  ValueSetter<bool> onFocusChanged;
   InputEventCallback<T> itemSubmitted;
   AutoCompleteOverlayItemBuilder<T> itemBuilder;
   int suggestionsAmount;
@@ -49,6 +50,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.decoration: const InputDecoration(),
       this.textChanged, //Callback on input text changed, this is a string
       this.textSubmitted, //Callback on input text submitted, this is also a string
+	  this.onFocusChanged,
       this.keyboardType: TextInputType.text,
       this.suggestionsAmount:
           5, //The amount of suggestions to show, larger values may result in them going off screen
@@ -83,6 +85,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       suggestions,
       textChanged,
       textSubmitted,
+	  onFocusChanged,
       itemSubmitted,
       itemBuilder,
       itemSorter,
@@ -103,6 +106,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   TextField textField;
   List<T> suggestions;
   StringCallback textChanged, textSubmitted;
+  ValueSetter<bool> onFocusChanged;
   InputEventCallback<T> itemSubmitted;
   AutoCompleteOverlayItemBuilder<T> itemBuilder;
   Comparator<T> itemSorter;
@@ -119,6 +123,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.suggestions,
       this.textChanged,
       this.textSubmitted,
+	  this.onFocusChanged,
       this.itemSubmitted,
       this.itemBuilder,
       this.itemSorter,
@@ -162,6 +167,9 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       },
     );
     textField.focusNode.addListener(() {
+		
+	  onFocusChanged(textField.focusNode.hasFocus);
+
       if (!textField.focusNode.hasFocus) {
         filteredSuggestions = [];
       }
@@ -272,10 +280,12 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 
 class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
   final StringCallback textChanged, textSubmitted;
+  final ValueSetter<bool> onFocusChanged;
 
   SimpleAutoCompleteTextField(
       {TextStyle style,
       InputDecoration decoration: const InputDecoration(),
+	  this.onFocusChanged,
       this.textChanged,
       this.textSubmitted,
       TextInputType keyboardType: TextInputType.text,
@@ -306,7 +316,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
 
   @override
   State<StatefulWidget> createState() => new AutoCompleteTextFieldState<String>(
-          suggestions, textChanged, textSubmitted, itemSubmitted,
+          suggestions, textChanged, textSubmitted, onFocusChanged, itemSubmitted,
           (context, item) {
         return new Padding(padding: EdgeInsets.all(8.0), child: new Text(item));
       }, (a, b) {
