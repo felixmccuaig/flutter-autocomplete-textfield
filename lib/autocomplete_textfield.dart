@@ -17,6 +17,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   Filter<T> itemFilter;
   Comparator<T> itemSorter;
   StringCallback textChanged, textSubmitted;
+  ValueSetter<bool> onFocusChanged;
   InputEventCallback<T> itemSubmitted;
   AutoCompleteOverlayItemBuilder<T> itemBuilder;
   int suggestionsAmount;
@@ -30,6 +31,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   TextInputType keyboardType;
   TextInputAction textInputAction;
   TextCapitalization textCapitalization;
+  final TextEditingController controller;
 
   AutoCompleteTextField(
       {@required
@@ -49,6 +51,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.decoration: const InputDecoration(),
       this.textChanged, //Callback on input text changed, this is a string
       this.textSubmitted, //Callback on input text submitted, this is also a string
+	  this.onFocusChanged,
       this.keyboardType: TextInputType.text,
       this.suggestionsAmount:
           5, //The amount of suggestions to show, larger values may result in them going off screen
@@ -57,7 +60,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.clearOnSubmit: true, //Clear autoCompleteTextfield on submit
       this.textInputAction: TextInputAction.done,
       this.textCapitalization: TextCapitalization.sentences,
-      this.minLength = 1})
+      this.minLength = 1,
+      this.controller})
       : super(key: key);
 
   void clear() {
@@ -83,6 +87,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       suggestions,
       textChanged,
       textSubmitted,
+	  onFocusChanged,
       itemSubmitted,
       itemBuilder,
       itemSorter,
@@ -96,13 +101,15 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       decoration,
       style,
       keyboardType,
-      textInputAction);
+      textInputAction,
+      controller);
 }
 
 class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   TextField textField;
   List<T> suggestions;
   StringCallback textChanged, textSubmitted;
+  ValueSetter<bool> onFocusChanged;
   InputEventCallback<T> itemSubmitted;
   AutoCompleteOverlayItemBuilder<T> itemBuilder;
   Comparator<T> itemSorter;
@@ -112,6 +119,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   int suggestionsAmount;
   int minLength;
   bool submitOnSuggestionTap, clearOnSubmit;
+  TextEditingController controller;
 
   String currentText = "";
 
@@ -119,6 +127,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.suggestions,
       this.textChanged,
       this.textSubmitted,
+	  this.onFocusChanged,
       this.itemSubmitted,
       this.itemBuilder,
       this.itemSorter,
@@ -132,7 +141,8 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       InputDecoration decoration,
       TextStyle style,
       TextInputType keyboardType,
-      TextInputAction textInputAction) {
+      TextInputAction textInputAction,
+      TextEditingController controller) {
     textField = new TextField(
       inputFormatters: inputFormatters,
       textCapitalization: textCapitalization,
@@ -140,9 +150,10 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       style: style,
       keyboardType: keyboardType,
       focusNode: new FocusNode(),
-      controller: new TextEditingController(),
+      controller: controller ?? new TextEditingController(),
       textInputAction: textInputAction,
       onChanged: (newText) {
+//        print('Autocomplete onChanged '+newText);
         currentText = newText;
         updateOverlay(newText);
 
@@ -164,6 +175,9 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       },
     );
     textField.focusNode.addListener(() {
+		
+	  onFocusChanged(textField.focusNode.hasFocus);
+
       if (!textField.focusNode.hasFocus) {
         filteredSuggestions = [];
       }
@@ -275,10 +289,12 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
   final StringCallback textChanged, textSubmitted;
   final int minLength;
+  final ValueSetter<bool> onFocusChanged;
 
   SimpleAutoCompleteTextField(
       {TextStyle style,
       InputDecoration decoration: const InputDecoration(),
+	  this.onFocusChanged,
       this.textChanged,
       this.textSubmitted,
       this.minLength = 1,
@@ -310,13 +326,23 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
 
   @override
   State<StatefulWidget> createState() => new AutoCompleteTextFieldState<String>(
-          suggestions, textChanged, textSubmitted, itemSubmitted,
+          suggestions, textChanged, textSubmitted, onFocusChanged, itemSubmitted,
           (context, item) {
         return new Padding(padding: EdgeInsets.all(8.0), child: new Text(item));
       }, (a, b) {
         return a.compareTo(b);
       }, (item, query) {
         return item.toLowerCase().startsWith(query.toLowerCase());
-      }, suggestionsAmount, submitOnSuggestionTap, clearOnSubmit, minLength, [],
-          textCapitalization, decoration, style, keyboardType, textInputAction);
+      },
+          suggestionsAmount,
+          submitOnSuggestionTap,
+          clearOnSubmit,
+          minLength,
+          [],
+          textCapitalization,
+          decoration,
+          style,
+          keyboardType,
+          textInputAction,
+          controller);
 }
