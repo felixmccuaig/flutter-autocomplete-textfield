@@ -24,6 +24,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   GlobalKey<AutoCompleteTextFieldState<T>> key;
   bool submitOnSuggestionTap, clearOnSubmit;
   List<TextInputFormatter> inputFormatters;
+  int minLength;
 
   InputDecoration decoration;
   TextStyle style;
@@ -59,6 +60,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.clearOnSubmit: true, //Clear autoCompleteTextfield on submit
       this.textInputAction: TextInputAction.done,
       this.textCapitalization: TextCapitalization.sentences,
+      this.minLength = 1,
       this.controller})
       : super(key: key);
 
@@ -93,6 +95,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       suggestionsAmount,
       submitOnSuggestionTap,
       clearOnSubmit,
+      minLength,
       inputFormatters,
       textCapitalization,
       decoration,
@@ -114,6 +117,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   List<T> filteredSuggestions;
   Filter<T> itemFilter;
   int suggestionsAmount;
+  int minLength;
   bool submitOnSuggestionTap, clearOnSubmit;
   TextEditingController controller;
 
@@ -131,6 +135,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.suggestionsAmount,
       this.submitOnSuggestionTap,
       this.clearOnSubmit,
+      this.minLength,
       List<TextInputFormatter> inputFormatters,
       TextCapitalization textCapitalization,
       InputDecoration decoration,
@@ -156,6 +161,9 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
           textChanged(newText);
         }
       },
+      onTap: (){
+        updateOverlay(currentText);
+      },
       onSubmitted: (submittedText) {
         if (clearOnSubmit) {
           clear();
@@ -178,7 +186,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 
   void clear() {
     textField.controller.clear();
-    updateOverlay("");
+    updateOverlay();
   }
 
   void addSuggestion(T suggestion) {
@@ -198,7 +206,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
     updateOverlay(currentText);
   }
 
-  void updateOverlay(String query) {
+  void updateOverlay([String query]) {
     if (listSuggestionsEntry == null) {
       final RenderBox textFieldRenderBox = context.findRenderObject();
       final RenderBox overlay = Overlay.of(context).context.findRenderObject();
@@ -260,7 +268,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 
   List<T> getSuggestions(List<T> suggestions, Comparator<T> sorter,
       Filter<T> filter, int maxAmount, String query) {
-    if (query == "") {
+    if (null == query || query.length < minLength) {
       return [];
     }
 
@@ -280,6 +288,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 
 class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
   final StringCallback textChanged, textSubmitted;
+  final int minLength;
   final ValueSetter<bool> onFocusChanged;
 
   SimpleAutoCompleteTextField(
@@ -288,6 +297,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
 	  this.onFocusChanged,
       this.textChanged,
       this.textSubmitted,
+      this.minLength = 1,
       TextInputType keyboardType: TextInputType.text,
       @required GlobalKey<AutoCompleteTextFieldState<String>> key,
       @required List<String> suggestions,
@@ -327,6 +337,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
           suggestionsAmount,
           submitOnSuggestionTap,
           clearOnSubmit,
+          minLength,
           [],
           textCapitalization,
           decoration,
