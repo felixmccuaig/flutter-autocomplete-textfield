@@ -106,6 +106,9 @@ class AutoCompleteTextField<T> extends StatefulWidget {
 }
 
 class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
+
+  final LayerLink _layerLink = LayerLink();
+
   TextField textField;
   List<T> suggestions;
   StringCallback textChanged, textSubmitted;
@@ -208,33 +211,26 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 
   void updateOverlay([String query]) {
     if (listSuggestionsEntry == null) {
-      final RenderBox textFieldRenderBox = context.findRenderObject();
-      final RenderBox overlay = Overlay.of(context).context.findRenderObject();
-      final width = textFieldRenderBox.size.width;
-      final RelativeRect position = new RelativeRect.fromRect(
-        new Rect.fromPoints(
-          textFieldRenderBox.localToGlobal(
-              textFieldRenderBox.size.bottomLeft(Offset.zero),
-              ancestor: overlay),
-          textFieldRenderBox.localToGlobal(
-              textFieldRenderBox.size.bottomRight(Offset.zero),
-              ancestor: overlay),
-        ),
-        Offset.zero & overlay.size,
-      );
-
-      listSuggestionsEntry = new OverlayEntry(builder: (context) {
-        return new Positioned(
-            top: position.top,
-            left: position.left,
-            child: new Container(
+      final Size textFieldSize = (context.findRenderObject() as RenderBox).size;
+      final width = textFieldSize.width;
+      final height = textFieldSize.height;
+      listSuggestionsEntry = new OverlayEntry(
+        builder: (context) {
+          return new Positioned(
+            width: width,
+            child: CompositedTransformFollower(
+              link: _layerLink,
+              showWhenUnlinked: false,
+              offset: Offset(0.0, height),
+              child: new SizedBox(
                 width: width,
                 child: new Card(
-                    child: new Column(
-                  children: filteredSuggestions.map((suggestion) {
-                    return new Row(children: [
-                      new Expanded(
-                          child: new InkWell(
+                  child: new Column(
+                    children: filteredSuggestions.map((suggestion) {
+                      return new Row(
+                        children: [
+                          new Expanded(
+                            child: new InkWell(
                               child: itemBuilder(context, suggestion),
                               onTap: () {
                                 setState(() {
@@ -252,11 +248,19 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
                                     textChanged(newText);
                                   }
                                 });
-                              }))
-                    ]);
-                  }).toList(),
-                ))));
-      });
+                              }
+                            )
+                          )
+                        ]
+                      );
+                    }).toList(),
+                  )
+                )
+              )
+            )
+          );
+        }
+      );
       Overlay.of(context).insert(listSuggestionsEntry);
     }
 
@@ -282,7 +286,10 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return textField;
+    return CompositedTransformTarget(
+      link: _layerLink,
+      child: textField
+    );
   }
 }
 
