@@ -183,6 +183,10 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 
       if (!textField.focusNode.hasFocus) {
         filteredSuggestions = [];
+        updateOverlay();
+      }
+      else if(!(currentText == "" || currentText == null)){
+        updateOverlay(currentText);
       }
     });
   }
