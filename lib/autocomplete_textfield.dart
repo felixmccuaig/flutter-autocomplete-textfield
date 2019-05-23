@@ -178,8 +178,8 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       },
     );
     textField.focusNode.addListener(() {
-		
-	  onFocusChanged(textField.focusNode.hasFocus);
+	    if(onFocusChanged != null)
+		    onFocusChanged(textField.focusNode.hasFocus);
 
       if (!textField.focusNode.hasFocus) {
         filteredSuggestions = [];
@@ -301,6 +301,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
   final StringCallback textChanged, textSubmitted;
   final int minLength;
   final ValueSetter<bool> onFocusChanged;
+  final TextEditingController controller;
 
   SimpleAutoCompleteTextField(
       {TextStyle style,
@@ -309,6 +310,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
       this.textChanged,
       this.textSubmitted,
       this.minLength = 1,
+      this.controller,
       TextInputType keyboardType: TextInputType.text,
       @required GlobalKey<AutoCompleteTextFieldState<String>> key,
       @required List<String> suggestions,
