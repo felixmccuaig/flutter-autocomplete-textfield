@@ -41,3 +41,7 @@ Fixed example and new vid thing
 
 [1.6.4]
 Added input formatters.
+
+[1.6.7]
+Added TextEditingController to SimpleAutoCompleteTextfield.
+Added null check to focus node listener.
