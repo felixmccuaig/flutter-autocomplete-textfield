@@ -13,24 +13,24 @@ typedef InputEventCallback<T>(T data);
 typedef StringCallback(String data);
 
 class AutoCompleteTextField<T> extends StatefulWidget {
-  List<T> suggestions;
-  Filter<T> itemFilter;
-  Comparator<T> itemSorter;
-  StringCallback textChanged, textSubmitted;
-  ValueSetter<bool> onFocusChanged;
-  InputEventCallback<T> itemSubmitted;
-  AutoCompleteOverlayItemBuilder<T> itemBuilder;
-  int suggestionsAmount;
-  GlobalKey<AutoCompleteTextFieldState<T>> key;
-  bool submitOnSuggestionTap, clearOnSubmit;
-  List<TextInputFormatter> inputFormatters;
-  int minLength;
+  final List<T> suggestions;
+  final Filter<T> itemFilter;
+  final Comparator<T> itemSorter;
+  final StringCallback textChanged, textSubmitted;
+  final ValueSetter<bool> onFocusChanged;
+  final InputEventCallback<T> itemSubmitted;
+  final AutoCompleteOverlayItemBuilder<T> itemBuilder;
+  final int suggestionsAmount;
+  final GlobalKey<AutoCompleteTextFieldState<T>> key;
+  final bool submitOnSuggestionTap, clearOnSubmit;
+  final List<TextInputFormatter> inputFormatters;
+  final int minLength;
 
-  InputDecoration decoration;
-  TextStyle style;
-  TextInputType keyboardType;
-  TextInputAction textInputAction;
-  TextCapitalization textCapitalization;
+  final InputDecoration decoration;
+  final TextStyle style;
+  final TextInputType keyboardType;
+  final TextInputAction textInputAction;
+  final TextCapitalization textCapitalization;
   final TextEditingController controller;
   final FocusNode focusNode;
 
