@@ -45,3 +45,6 @@ Added input formatters.
 [1.6.7]
 Added TextEditingController to SimpleAutoCompleteTextfield.
 Added null check to focus node listener.
+
+[1.6.8]
+Implemented dispose for autocomplete_textfield, cleans up resources after using. Also added focusNode which can be passed in by user.
