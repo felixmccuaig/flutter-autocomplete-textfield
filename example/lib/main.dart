@@ -60,10 +60,14 @@ class _FirstPageState extends State<FirstPage> {
   _FirstPageState() {
     textField = SimpleAutoCompleteTextField(
       key: key,
+      controller: TextEditingController(text: "Starting Text"),
       suggestions: suggestions,
       textChanged: (text) => currentText = text,
+      clearOnSubmit: true,
       textSubmitted: (text) => setState(() {
-            added.add(text);
+            if(text != "") {
+              added.add(text);
+            }
           }),
     );
   }
@@ -112,15 +116,9 @@ class _FirstPageState extends State<FirstPage> {
           title: textField,
           trailing: new IconButton(
               icon: new Icon(Icons.add),
-              onPressed: () {
-                setState(() {
-                  if (currentText != "") {
-                    added.add(currentText);
-                    textField.clear();
-                    currentText = "";
-                  }
-                });
-              }))
+              onPressed: () => textField.triggerSubmitted()
+          )
+      )
     ]);
 
     body.children.addAll(added.map((item) {

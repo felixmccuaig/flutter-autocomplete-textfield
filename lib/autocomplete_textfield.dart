@@ -82,6 +82,10 @@ class AutoCompleteTextField<T> extends StatefulWidget {
     key.currentState.updateSuggestions(suggestions);
   }
 
+  void triggerSubmitted() {
+    key.currentState.triggerSubmitted();
+  }
+
   TextField get textField => key.currentState.textField;
 
   @override
@@ -161,7 +165,6 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       controller: controller ?? new TextEditingController(),
       textInputAction: textInputAction,
       onChanged: (newText) {
-//        print('Autocomplete onChanged '+newText);
         currentText = newText;
         updateOverlay(newText);
 
@@ -172,16 +175,13 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       onTap: (){
         updateOverlay(currentText);
       },
-      onSubmitted: (submittedText) {
-        if (clearOnSubmit) {
-          clear();
-        }
-
-        if (textSubmitted != null) {
-          textSubmitted(submittedText);
-        }
-      },
+      onSubmitted: (submittedText) => triggerSubmitted(submittedText: submittedText),
     );
+
+    if(this.controller != null && this.controller.text != null) {
+      currentText = this.controller.text;
+    }
+
     textField.focusNode.addListener(() {
 	    if(onFocusChanged != null)
 		    onFocusChanged(textField.focusNode.hasFocus);
@@ -196,8 +196,17 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
     });
   }
 
+  void triggerSubmitted({submittedText}) {
+    submittedText == null ? textSubmitted(currentText) : textSubmitted(submittedText);
+
+    if (clearOnSubmit) {
+      clear();
+    }
+  }
+
   void clear() {
     textField.controller.clear();
+    currentText = "";
     updateOverlay();
   }
 
