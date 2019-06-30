@@ -1,4 +1,4 @@
-## Changelog
+# Changelog
 
 [1.0.0]
 
@@ -10,7 +10,7 @@ A few bug fixes and more functionality added.
 
 Added textInputAction.
 
-# Breaking Changes [1.4.0]
+### Breaking Changes [1.4.0]
 
  TextField is set by default to call onSubmitted on a suggestion tap and also to clear the TextField on submit.
 
