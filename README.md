@@ -3,7 +3,7 @@
 An autocomplete textfield for flutter
 
 # pull requests
-Feel free to submit pull requests!
+Feel free to submit pull requests for desired changes / features / bug fixes... It makes the maintenance of this code much easier as I no longer use Flutter frequently.
  
  ## Pub Package Can Be Found At
  

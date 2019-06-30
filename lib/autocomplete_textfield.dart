@@ -32,6 +32,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   TextInputAction textInputAction;
   TextCapitalization textCapitalization;
   final TextEditingController controller;
+  final FocusNode focusNode;
 
   AutoCompleteTextField(
       {@required
@@ -61,7 +62,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.textInputAction: TextInputAction.done,
       this.textCapitalization: TextCapitalization.sentences,
       this.minLength = 1,
-      this.controller})
+      this.controller,
+      this.focusNode})
       : super(key: key);
 
   void clear() {
@@ -102,7 +104,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       style,
       keyboardType,
       textInputAction,
-      controller);
+      controller,
+      focusNode);
 }
 
 class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
@@ -123,6 +126,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   int minLength;
   bool submitOnSuggestionTap, clearOnSubmit;
   TextEditingController controller;
+  FocusNode focusNode;
 
   String currentText = "";
 
@@ -145,14 +149,15 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       TextStyle style,
       TextInputType keyboardType,
       TextInputAction textInputAction,
-      TextEditingController controller) {
+      this.controller,
+      this.focusNode) {
     textField = new TextField(
       inputFormatters: inputFormatters,
       textCapitalization: textCapitalization,
       decoration: decoration,
       style: style,
       keyboardType: keyboardType,
-      focusNode: new FocusNode(),
+      focusNode: focusNode ?? new FocusNode(),
       controller: controller ?? new TextEditingController(),
       textInputAction: textInputAction,
       onChanged: (newText) {
@@ -289,6 +294,19 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   }
 
   @override
+  void dispose() {
+    // if we created our own focus node and controller, dispose of them
+    // otherwise, let the caller dispose of their own instances
+    if (focusNode == null) {
+      textField.focusNode.dispose();
+    }
+    if (controller == null) {
+      textField.controller.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CompositedTransformTarget(
       link: _layerLink,
@@ -302,6 +320,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
   final int minLength;
   final ValueSetter<bool> onFocusChanged;
   final TextEditingController controller;
+  final FocusNode focusNode;
 
   SimpleAutoCompleteTextField(
       {TextStyle style,
@@ -311,6 +330,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
       this.textSubmitted,
       this.minLength = 1,
       this.controller,
+      this.focusNode,
       TextInputType keyboardType: TextInputType.text,
       @required GlobalKey<AutoCompleteTextFieldState<String>> key,
       @required List<String> suggestions,
@@ -357,5 +377,6 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
           style,
           keyboardType,
           textInputAction,
-          controller);
+          controller,
+          focusNode);
 }
