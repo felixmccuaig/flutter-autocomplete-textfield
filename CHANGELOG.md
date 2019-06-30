@@ -57,3 +57,6 @@ Added the ability to specify starting text through TextEditingController, and th
 ### Breaking Changes
 
 Now submitting text calls triggerSubmit and clearText clears internal current text.
+
+[1.7.1]
+All fields are final now in AutoCompleteTextField.
