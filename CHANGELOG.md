@@ -50,3 +50,10 @@ Added null check to focus node listener.
 
 [1.6.8]
 Implemented dispose for autocomplete_textfield, cleans up resources after using. Also added focusNode which can be passed in by user.
+
+[1.7.0]
+Added the ability to specify starting text through TextEditingController, and the new method triggerSubmit was added.
+
+### Breaking Changes
+
+Now submitting text calls triggerSubmit and clearText clears internal current text.
