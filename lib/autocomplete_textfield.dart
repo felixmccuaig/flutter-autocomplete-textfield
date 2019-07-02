@@ -52,7 +52,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.decoration: const InputDecoration(),
       this.textChanged, //Callback on input text changed, this is a string
       this.textSubmitted, //Callback on input text submitted, this is also a string
-	  this.onFocusChanged,
+      this.onFocusChanged,
       this.keyboardType: TextInputType.text,
       this.suggestionsAmount:
           5, //The amount of suggestions to show, larger values may result in them going off screen
@@ -66,25 +66,28 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.focusNode})
       : super(key: key);
 
-  void clear() {
-    key.currentState.clear();
-  }
+  void clear() => key.currentState.clear();
 
-  void addSuggestion(T suggestion) {
-    key.currentState.addSuggestion(suggestion);
-  }
+  void addSuggestion(T suggestion) =>
+      key.currentState.addSuggestion(suggestion);
 
-  void removeSuggestion(T suggestion) {
-    key.currentState.removeSuggestion(suggestion);
-  }
+  void removeSuggestion(T suggestion) =>
+      key.currentState.removeSuggestion(suggestion);
 
-  void updateSuggestions(List<T> suggestions) {
-    key.currentState.updateSuggestions(suggestions);
-  }
+  void updateSuggestions(List<T> suggestions) =>
+      key.currentState.updateSuggestions(suggestions);
 
-  void triggerSubmitted() {
-    key.currentState.triggerSubmitted();
-  }
+  void triggerSubmitted() => key.currentState.triggerSubmitted();
+
+  void updateDecoration(
+          {InputDecoration decoration,
+          List<TextInputFormatter> inputFormatters,
+          TextCapitalization textCapitalization,
+          TextStyle style,
+          TextInputType keyboardType,
+          TextInputAction textInputAction}) =>
+      key.currentState.updateDecoration(decoration, inputFormatters,
+          textCapitalization, style, keyboardType, textInputAction);
 
   TextField get textField => key.currentState.textField;
 
@@ -93,7 +96,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       suggestions,
       textChanged,
       textSubmitted,
-	  onFocusChanged,
+      onFocusChanged,
       itemSubmitted,
       itemBuilder,
       itemSorter,
@@ -113,7 +116,6 @@ class AutoCompleteTextField<T> extends StatefulWidget {
 }
 
 class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
-
   final LayerLink _layerLink = LayerLink();
 
   TextField textField;
@@ -134,11 +136,18 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 
   String currentText = "";
 
+  InputDecoration decoration;
+  List<TextInputFormatter> inputFormatters;
+  TextCapitalization textCapitalization;
+  TextStyle style;
+  TextInputType keyboardType;
+  TextInputAction textInputAction;
+
   AutoCompleteTextFieldState(
       this.suggestions,
       this.textChanged,
       this.textSubmitted,
-	  this.onFocusChanged,
+      this.onFocusChanged,
       this.itemSubmitted,
       this.itemBuilder,
       this.itemSorter,
@@ -147,12 +156,12 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.submitOnSuggestionTap,
       this.clearOnSubmit,
       this.minLength,
-      List<TextInputFormatter> inputFormatters,
-      TextCapitalization textCapitalization,
-      InputDecoration decoration,
-      TextStyle style,
-      TextInputType keyboardType,
-      TextInputAction textInputAction,
+      this.inputFormatters,
+      this.textCapitalization,
+      this.decoration,
+      this.style,
+      this.keyboardType,
+      this.textInputAction,
       this.controller,
       this.focusNode) {
     textField = new TextField(
@@ -172,32 +181,96 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
           textChanged(newText);
         }
       },
-      onTap: (){
+      onTap: () {
         updateOverlay(currentText);
       },
-      onSubmitted: (submittedText) => triggerSubmitted(submittedText: submittedText),
+      onSubmitted: (submittedText) =>
+          triggerSubmitted(submittedText: submittedText),
     );
 
-    if(this.controller != null && this.controller.text != null) {
+    if (this.controller != null && this.controller.text != null) {
       currentText = this.controller.text;
     }
 
     textField.focusNode.addListener(() {
-	    if(onFocusChanged != null)
-		    onFocusChanged(textField.focusNode.hasFocus);
+      if (onFocusChanged != null) {
+        onFocusChanged(textField.focusNode.hasFocus);
+      }
 
       if (!textField.focusNode.hasFocus) {
         filteredSuggestions = [];
         updateOverlay();
-      }
-      else if(!(currentText == "" || currentText == null)){
+      } else if (!(currentText == "" || currentText == null)) {
         updateOverlay(currentText);
       }
     });
   }
 
+  void updateDecoration(
+      InputDecoration decoration,
+      List<TextInputFormatter> inputFormatters,
+      TextCapitalization textCapitalization,
+      TextStyle style,
+      TextInputType keyboardType,
+      TextInputAction textInputAction) {
+
+    if(decoration != null) {
+      this.decoration = decoration;
+    }
+
+    if(inputFormatters != null) {
+      this.inputFormatters = inputFormatters;
+    }
+
+    if(textCapitalization != null) {
+      this.textCapitalization = textCapitalization;
+    }
+
+    if(style != null) {
+      this.style = style;
+    }
+
+    if(keyboardType != null) {
+      this.keyboardType = keyboardType;
+    }
+
+    if(textInputAction != null) {
+      this.textInputAction = textInputAction;
+    }
+
+    setState(() {
+      textField = new TextField(
+        inputFormatters: this.inputFormatters,
+        textCapitalization: this.textCapitalization,
+        decoration: this.decoration,
+        style: this.style,
+        keyboardType: this.keyboardType,
+        focusNode: focusNode ?? new FocusNode(),
+        controller: controller ?? new TextEditingController(),
+        textInputAction: this.textInputAction,
+        onChanged: (newText) {
+          currentText = newText;
+          updateOverlay(newText);
+
+          if (textChanged != null) {
+            textChanged(newText);
+          }
+        },
+        onTap: () {
+          updateOverlay(currentText);
+        },
+        onSubmitted: (submittedText) =>
+            triggerSubmitted(submittedText: submittedText),
+      );
+
+    });
+
+  }
+
   void triggerSubmitted({submittedText}) {
-    submittedText == null ? textSubmitted(currentText) : textSubmitted(submittedText);
+    submittedText == null
+        ? textSubmitted(currentText)
+        : textSubmitted(submittedText);
 
     if (clearOnSubmit) {
       clear();
@@ -232,53 +305,43 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       final Size textFieldSize = (context.findRenderObject() as RenderBox).size;
       final width = textFieldSize.width;
       final height = textFieldSize.height;
-      listSuggestionsEntry = new OverlayEntry(
-        builder: (context) {
-          return new Positioned(
+      listSuggestionsEntry = new OverlayEntry(builder: (context) {
+        return new Positioned(
             width: width,
             child: CompositedTransformFollower(
-              link: _layerLink,
-              showWhenUnlinked: false,
-              offset: Offset(0.0, height),
-              child: new SizedBox(
-                width: width,
-                child: new Card(
-                  child: new Column(
-                    children: filteredSuggestions.map((suggestion) {
-                      return new Row(
-                        children: [
+                link: _layerLink,
+                showWhenUnlinked: false,
+                offset: Offset(0.0, height),
+                child: new SizedBox(
+                    width: width,
+                    child: new Card(
+                        child: new Column(
+                      children: filteredSuggestions.map((suggestion) {
+                        return new Row(children: [
                           new Expanded(
-                            child: new InkWell(
-                              child: itemBuilder(context, suggestion),
-                              onTap: () {
-                                setState(() {
-                                  if (submitOnSuggestionTap) {
-                                    String newText = suggestion.toString();
-                                    textField.controller.text = newText;
-                                    textField.focusNode.unfocus();
-                                    itemSubmitted(suggestion);
-                                    if (clearOnSubmit) {
-                                      clear();
-                                    }
-                                  } else {
-                                    String newText = suggestion.toString();
-                                    textField.controller.text = newText;
-                                    textChanged(newText);
-                                  }
-                                });
-                              }
-                            )
-                          )
-                        ]
-                      );
-                    }).toList(),
-                  )
-                )
-              )
-            )
-          );
-        }
-      );
+                              child: new InkWell(
+                                  child: itemBuilder(context, suggestion),
+                                  onTap: () {
+                                    setState(() {
+                                      if (submitOnSuggestionTap) {
+                                        String newText = suggestion.toString();
+                                        textField.controller.text = newText;
+                                        textField.focusNode.unfocus();
+                                        itemSubmitted(suggestion);
+                                        if (clearOnSubmit) {
+                                          clear();
+                                        }
+                                      } else {
+                                        String newText = suggestion.toString();
+                                        textField.controller.text = newText;
+                                        textChanged(newText);
+                                      }
+                                    });
+                                  }))
+                        ]);
+                      }).toList(),
+                    )))));
+      });
       Overlay.of(context).insert(listSuggestionsEntry);
     }
 
@@ -317,10 +380,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return CompositedTransformTarget(
-      link: _layerLink,
-      child: textField
-    );
+    return CompositedTransformTarget(link: _layerLink, child: textField);
   }
 }
 
@@ -334,7 +394,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
   SimpleAutoCompleteTextField(
       {TextStyle style,
       InputDecoration decoration: const InputDecoration(),
-	  this.onFocusChanged,
+      this.onFocusChanged,
       this.textChanged,
       this.textSubmitted,
       this.minLength = 1,
@@ -368,8 +428,11 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
 
   @override
   State<StatefulWidget> createState() => new AutoCompleteTextFieldState<String>(
-          suggestions, textChanged, textSubmitted, onFocusChanged, itemSubmitted,
-          (context, item) {
+          suggestions,
+          textChanged,
+          textSubmitted,
+          onFocusChanged,
+          itemSubmitted, (context, item) {
         return new Padding(padding: EdgeInsets.all(8.0), child: new Text(item));
       }, (a, b) {
         return a.compareTo(b);
