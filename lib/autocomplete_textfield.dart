@@ -213,28 +213,27 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       TextStyle style,
       TextInputType keyboardType,
       TextInputAction textInputAction) {
-
-    if(decoration != null) {
+    if (decoration != null) {
       this.decoration = decoration;
     }
 
-    if(inputFormatters != null) {
+    if (inputFormatters != null) {
       this.inputFormatters = inputFormatters;
     }
 
-    if(textCapitalization != null) {
+    if (textCapitalization != null) {
       this.textCapitalization = textCapitalization;
     }
 
-    if(style != null) {
+    if (style != null) {
       this.style = style;
     }
 
-    if(keyboardType != null) {
+    if (keyboardType != null) {
       this.keyboardType = keyboardType;
     }
 
-    if(textInputAction != null) {
+    if (textInputAction != null) {
       this.textInputAction = textInputAction;
     }
 
@@ -262,9 +261,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
         onSubmitted: (submittedText) =>
             triggerSubmitted(submittedText: submittedText),
       );
-
     });
-
   }
 
   void triggerSubmitted({submittedText}) {

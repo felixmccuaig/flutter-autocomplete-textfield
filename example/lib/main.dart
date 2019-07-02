@@ -66,10 +66,10 @@ class _FirstPageState extends State<FirstPage> {
       textChanged: (text) => currentText = text,
       clearOnSubmit: true,
       textSubmitted: (text) => setState(() {
-        if (text != "") {
-          added.add(text);
-        }
-      }),
+            if (text != "") {
+              added.add(text);
+            }
+          }),
     );
   }
 
