@@ -120,14 +120,10 @@ class _FirstPageState extends State<FirstPage> {
               icon: new Icon(Icons.add),
               onPressed: () {
                 textField.triggerSubmitted();
-                setState(() {
-                  showWhichErrorText = !showWhichErrorText;
-                  print(showWhichErrorText);
-                  textField.updateDecoration(
-                      decoration: new InputDecoration(
-                          errorText: showWhichErrorText ? "Beans" : "Tomatoes"));
-
-                });
+                showWhichErrorText = !showWhichErrorText;
+                textField.updateDecoration(
+                    decoration: new InputDecoration(
+                        errorText: showWhichErrorText ? "Beans" : "Tomatoes"));
               })),
     ]);
 

@@ -60,3 +60,6 @@ Now submitting text calls triggerSubmit and clearText clears internal current te
 
 [1.7.1]
 All fields are final now in AutoCompleteTextField.
+
+[1.7.3]
+InputDecoration and styles etc can now be changed dynamically with the updateDecoration() method.
