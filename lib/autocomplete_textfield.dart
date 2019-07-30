@@ -320,7 +320,8 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
                                   child: itemBuilder(context, suggestion),
                                   onTap: () {
                                     setState(() {
-                                      final String newText = suggestion.toString();
+                                      final String newText =
+                                          suggestion.toString();
                                       textField.controller.text = newText;
                                       if (submitOnSuggestionTap) {
                                         textField.focusNode.unfocus();
