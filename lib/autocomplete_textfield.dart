@@ -264,7 +264,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
     });
   }
 
-  void triggerSubmitted({submittedText}) {
+  void triggerSubmitted({dynamic submittedText}) {
     submittedText == null
         ? textSubmitted(currentText)
         : textSubmitted(submittedText);
