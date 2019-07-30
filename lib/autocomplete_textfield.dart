@@ -300,8 +300,8 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   void updateOverlay([String query]) {
     if (listSuggestionsEntry == null) {
       final Size textFieldSize = (context.findRenderObject() as RenderBox).size;
-      final width = textFieldSize.width;
-      final height = textFieldSize.height;
+      final double width = textFieldSize.width;
+      final double height = textFieldSize.height;
       listSuggestionsEntry = OverlayEntry(builder: (context) {
         return Positioned(
             width: width,
@@ -320,17 +320,15 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
                                   child: itemBuilder(context, suggestion),
                                   onTap: () {
                                     setState(() {
-                                      if (submitOnSuggestionTap) {
-                                        String newText = suggestion.toString();
+                                      final String newText = suggestion.toString();
                                         textField.controller.text = newText;
+                                      if (submitOnSuggestionTap) {
                                         textField.focusNode.unfocus();
                                         itemSubmitted(suggestion);
                                         if (clearOnSubmit) {
                                           clear();
                                         }
                                       } else {
-                                        String newText = suggestion.toString();
-                                        textField.controller.text = newText;
                                         textChanged(newText);
                                       }
                                     });
