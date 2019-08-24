@@ -60,10 +60,15 @@ class _FirstPageState extends State<FirstPage> {
   _FirstPageState() {
     textField = SimpleAutoCompleteTextField(
       key: key,
+      decoration: new InputDecoration(errorText: "Beans"),
+      controller: TextEditingController(text: "Starting Text"),
       suggestions: suggestions,
       textChanged: (text) => currentText = text,
+      clearOnSubmit: true,
       textSubmitted: (text) => setState(() {
-            added.add(text);
+            if (text != "") {
+              added.add(text);
+            }
           }),
     );
   }
@@ -104,6 +109,7 @@ class _FirstPageState extends State<FirstPage> {
   ];
 
   SimpleAutoCompleteTextField textField;
+  bool showWhichErrorText = false;
 
   @override
   Widget build(BuildContext context) {
@@ -113,14 +119,12 @@ class _FirstPageState extends State<FirstPage> {
           trailing: new IconButton(
               icon: new Icon(Icons.add),
               onPressed: () {
-                setState(() {
-                  if (currentText != "") {
-                    added.add(currentText);
-                    textField.clear();
-                    currentText = "";
-                  }
-                });
-              }))
+                textField.triggerSubmitted();
+                showWhichErrorText = !showWhichErrorText;
+                textField.updateDecoration(
+                    decoration: new InputDecoration(
+                        errorText: showWhichErrorText ? "Beans" : "Tomatoes"));
+              })),
     ]);
 
     body.children.addAll(added.map((item) {
