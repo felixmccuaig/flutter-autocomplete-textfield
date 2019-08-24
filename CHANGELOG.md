@@ -40,4 +40,9 @@ Exposed textField
 Fixed example and new vid thing
 
 [1.6.4]
+
 Added input formatters.
+
+[1.7.0]
+
+Added filter advanced with regex in SimpleAutoCompleteTextField
