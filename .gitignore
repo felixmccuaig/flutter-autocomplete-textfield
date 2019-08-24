@@ -19,5 +19,5 @@ example/.flutter-plugins
 example/ios/.generated/
 example/ios/Flutter/Generated.xcconfig
 example/ios/Runner/GeneratedPluginRegistrant.*
-
-.idea/workspace.xml
+.idea/
+.vscode
