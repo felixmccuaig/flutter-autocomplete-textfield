@@ -434,7 +434,6 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
       }, (a, b) {
         return a.compareTo(b);
       }, (item, query) {
-        print(query);
         final regex = RegExp(query, caseSensitive: false);
         return regex.hasMatch(item?.toLowerCase());
       },
