@@ -346,7 +346,6 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
         print(query);
         final regex = RegExp(query, caseSensitive: false);
         return regex.hasMatch(item?.toLowerCase());
-        //return item.toLowerCase().startsWith(query.toLowerCase());
       },
           suggestionsAmount,
           submitOnSuggestionTap,
