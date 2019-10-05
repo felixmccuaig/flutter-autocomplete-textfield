@@ -372,6 +372,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
     if (controller == null) {
       textField.controller.dispose();
     }
+    listSuggestionsEntry?.remove();
     super.dispose();
   }
 
