@@ -298,7 +298,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   }
 
   void updateOverlay([String query]) {
-    if (listSuggestionsEntry == null) {
+    if (listSuggestionsEntry == null && filteredSuggestions != null) {
       final Size textFieldSize = (context.findRenderObject() as RenderBox).size;
       final width = textFieldSize.width;
       final height = textFieldSize.height;
