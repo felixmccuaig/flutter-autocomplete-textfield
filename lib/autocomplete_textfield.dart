@@ -302,21 +302,21 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       final Size textFieldSize = (context.findRenderObject() as RenderBox).size;
       final width = textFieldSize.width;
       final height = textFieldSize.height;
-      listSuggestionsEntry = new OverlayEntry(builder: (context) {
-        return new Positioned(
+      listSuggestionsEntry = OverlayEntry(builder: (context) {
+        return Positioned(
             width: width,
             child: CompositedTransformFollower(
                 link: _layerLink,
                 showWhenUnlinked: false,
                 offset: Offset(0.0, height),
-                child: new SizedBox(
+                child: SizedBox(
                     width: width,
-                    child: new Card(
+                    child: Card(
                         child: new Column(
                       children: filteredSuggestions.map((suggestion) {
-                        return new Row(children: [
-                          new Expanded(
-                              child: new InkWell(
+                        return Row(children: [
+                          Expanded(
+                              child: InkWell(
                                   child: itemBuilder(context, suggestion),
                                   onTap: () {
                                     if (!this.mounted) return;
@@ -346,7 +346,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
     filteredSuggestions = getSuggestions(
         suggestions, itemSorter, itemFilter, suggestionsAmount, query);
 
-    listSuggestionsEntry.markNeedsBuild();
+    listSuggestionsEntry?.markNeedsBuild();
   }
 
   List<T> getSuggestions(List<T> suggestions, Comparator<T> sorter,
