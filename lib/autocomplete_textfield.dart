@@ -435,7 +435,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
       }, (a, b) {
         return a.compareTo(b);
       }, (item, query) {
-        return item.toLowerCase().startsWith(query.toLowerCase());
+        return item.toLowerCase().contains(query.toLowerCase());
       },
           suggestionsAmount,
           submitOnSuggestionTap,
