@@ -9,6 +9,7 @@ ios/.generated/
 ios/Flutter/Generated.xcconfig
 ios/Runner/GeneratedPluginRegistrant.*
 
+
 example/.DS_Store
 example/.dart_tool/
 example/.packages
@@ -19,5 +20,7 @@ example/.flutter-plugins
 example/ios/.generated/
 example/ios/Flutter/Generated.xcconfig
 example/ios/Runner/GeneratedPluginRegistrant.*
+
+example/android/.idea
 
 .idea/**
