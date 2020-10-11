@@ -397,6 +397,8 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
 class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
   final StringCallback textChanged, textSubmitted;
   final int minLength;
+  final int maxLength;
+  final bool readOnly;
   final ValueSetter<bool> onFocusChanged;
   final TextEditingController controller;
   final FocusNode focusNode;
@@ -410,6 +412,8 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
       this.minLength = 1,
       this.controller,
       this.focusNode,
+      this.maxLength,
+      this.readOnly,
       TextInputType keyboardType: TextInputType.text,
       @required GlobalKey<AutoCompleteTextFieldState<String>> key,
       @required List<String> suggestions,
@@ -430,6 +434,8 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
             itemBuilder: null,
             itemSorter: null,
             itemFilter: null,
+            maxLength: maxLength,
+            readOnly: readOnly,
             suggestionsAmount: suggestionsAmount,
             submitOnSuggestionTap: submitOnSuggestionTap,
             clearOnSubmit: clearOnSubmit,
@@ -453,6 +459,8 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
           submitOnSuggestionTap,
           clearOnSubmit,
           minLength,
+          maxLength,
+          readOnly,
           [],
           textCapitalization,
           decoration,
