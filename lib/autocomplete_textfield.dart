@@ -25,6 +25,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   final bool submitOnSuggestionTap, clearOnSubmit;
   final List<TextInputFormatter> inputFormatters;
   final int minLength;
+  final int maxLength;
+  final bool readOnly;
 
   final InputDecoration decoration;
   final TextStyle style;
@@ -63,6 +65,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.textCapitalization: TextCapitalization.sentences,
       this.minLength = 1,
       this.controller,
+      this.maxLength,
+      this.readOnly = false,
       this.focusNode})
       : super(key: key);
 
@@ -105,6 +109,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       submitOnSuggestionTap,
       clearOnSubmit,
       minLength,
+      maxLength,
+      readOnly,
       inputFormatters,
       textCapitalization,
       decoration,
@@ -130,6 +136,8 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   Filter<T> itemFilter;
   int suggestionsAmount;
   int minLength;
+  int maxLength;
+  bool readOnly;
   bool submitOnSuggestionTap, clearOnSubmit;
   TextEditingController controller;
   FocusNode focusNode;
@@ -156,6 +164,8 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.submitOnSuggestionTap,
       this.clearOnSubmit,
       this.minLength,
+      this.maxLength,
+      this.readOnly,
       this.inputFormatters,
       this.textCapitalization,
       this.decoration,
@@ -169,6 +179,8 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       textCapitalization: textCapitalization,
       decoration: decoration,
       style: style,
+      maxLength: maxLength,
+      readOnly: readOnly,
       keyboardType: keyboardType,
       focusNode: focusNode ?? new FocusNode(),
       controller: controller ?? new TextEditingController(),
