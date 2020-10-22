@@ -34,4 +34,4 @@ itemFilter: (item, query) {
 }
 `
 
-![](textfield-demo.gif)
+<img src="textfield-demo.gif" width="300" >
