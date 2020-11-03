@@ -19,7 +19,9 @@ Feel free to submit pull requests for desired changes / features / bug fixes... 
  
  AutoCompleteTextField supports any data type suggestions
  
- `new AutoCompleteTextField<YOURDATATYPE>()`
+ ```dart
+ new AutoCompleteTextField<YOURDATATYPE>()
+ ```
  
 The suggestions parameter must have data that matches `<YOURDATATYPE>`
  
@@ -28,10 +30,11 @@ The suggestions parameter must have data that matches `<YOURDATATYPE>`
 # Strings and itemFilter
 
 Filtering is case sensitive so when using strings a common implementation of itemFilter is .   
-`
+
+```dart
 itemFilter: (item, query) {
   return item.toLowerCase().startsWith(query.toLowerCase());
 }
-`
+```
 
 ![](textfield-demo.gif)
