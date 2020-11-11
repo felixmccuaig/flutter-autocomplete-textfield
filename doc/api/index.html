@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 0.32.4">
+  <meta name="description" content="autocomplete_textfield API docs, for the Dart programming language.">
+  <title>autocomplete_textfield - Dart API docs</title>
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+
+</head>
+
+<body data-base-href=""
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="https://github.com/felixlucien/flutter-autocomplete-textfield">autocomplete_textfield package</a></li>
+  </ol>
+  <div class="self-name">autocomplete_textfield</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="https://github.com/felixlucien/flutter-autocomplete-textfield">autocomplete_textfield package</a></li>
+    </ol>
+    
+    <h5 class="hidden-xs"><span class="package-name">autocomplete_textfield</span> <span class="package-kind">package</span></h5>
+    <ol>
+          <li class="section-title">Libraries</li>
+          <li><a href="autocomplete_textfield/autocomplete_textfield-library.html">autocomplete_textfield</a></li>
+    </ol>
+  </div>
+
+  <div id="dartdoc-main-content" class="col-xs-12 col-sm-9 col-md-8 main-content">
+      <section class="desc markdown">
+        <h1 id="autocomplete_textfield">autocomplete_textfield</h1>
+<p>An Auto-Complete Text-Field for flutter</p>
+<h4 id="pull-requests">Pull Requests</h4>
+<p>Feel free to submit pull requests for desired changes / features / bug fixes... It makes the maintenance of this code much easier as I no longer use Flutter frequently. </p>
+<h2 id="breaking-changes-from-version-1xx-to-2xx">Breaking Changes from Version 1.x.x to 2.x.x</h2>
+<ul>
+<li>
+<p>All <a href="https://api.flutter.dev/flutter/material/TextField-class.html">TextField</a> parameters except <code>TextEditingController controller</code> and <code>FocusNode focusNode</code> have been moved to a <code>TextFieldConfiguration</code> class</p>
+<ul>
+<li><code>textChanged</code> moved and renamed to <code>onChanged</code> to reflect flutter's implementation</li>
+<li><code>textSubmitted</code> moved and renamed  to <code>onSubmitted</code> to reflect flutter's implementation</li>
+</ul>
+</li>
+<li>
+<p>Removed <code>submitOnSuggestions</code></p>
+</li>
+<li>
+<p>Moved several configuration options to <code>AutoCompleteConfiguration</code> </p>
+<ul>
+<li>Renamed <code>clearOnSubmit</code> to <code>clearOnSelected</code></li>
+</ul>
+</li>
+<li>
+<p>Removed <code>bool Function&lt;T&gt;(T value) itemFilter</code>, should be incorporated into <code>itemBuilder</code></p>
+</li>
+<li>
+<p>Removed <code>int Function&lt;T&gt;(T a, T b) itemSorter</code>, should be incorporated into <code>itemBuilder</code></p>
+</li>
+<li>
+<p>Removed <code>int suggestionsAmount</code>, this should be incorporated into <code>itemBuilder</code></p>
+</li>
+<li>
+<p>Removed <code>ValueSetter&lt;bool&gt; onFocusChanged</code> as this can be achieved by adding a listener to a provided <code>FocusNode</code></p>
+</li>
+<li>
+<p>Renamed <code>itemSubmitted</code> to <code>onItemSelected</code> to reflect Dart's naming conventions</p>
+</li>
+</ul>
+<h1 id="features">Features</h1>
+<ul>
+<li>Supports asynchronous tasks, just return a future from <code>itemBuilder</code> and optionally implement <code>errorBuilder</code> and <code>loadingBuilder</code> parameters</li>
+<li>Using the optional <code>transitionBuilder</code> function you can create custom transition animations (defaults to FadeTransition)</li>
+<li>AutoCompleteConfiguration
+<ul>
+<li>Specify is you'd prefer the suggestions to be shown above or below the field, if there is not enough space then the popup is rendered in whichever direction has the most space.</li>
+<li>The overflowLeeway parameter specifies how little difference there can be between the space above and space below to go with the preferred option</li>
+<li>The <code>clearOnSelected</code> parameter specifies whether to clear the field on item selection</li>
+<li>The <code>dismissOnSelected</code> parameters specifies whether to dismiss the popup on item selection</li>
+<li>Customize the shape, background color, and elevation of the dialog</li>
+<li>Invert the scroll direction using <code>reverseScrollDirection</code></li>
+<li>Offset the position of the popup using <code>offset</code></li>
+<li>Set the max size of the popup, must be finite and positive</li>
+</ul>
+</li>
+</ul>
+<h1 id="usage">Usage</h1>
+<p>Check out the <a href="https://github.com/felixlucien/flutter-autocomplete-textfield/blob/master/example/lib/main.dart">example project</a></p>
+<h3 id="installation">Installation</h3>
+<p>Add to pubspec.yaml</p>
+<pre class="language-yaml"><code class="language-yaml">    dependencies:
+      autocomplete_textfield: ^2.0.0
+</code></pre>
+<p>Import it into your project</p>
+<pre class="language-dart"><code class="language-dart">import 'package:autocomplete_textfield.dart';
+</code></pre>
+<p>Implement the and auto-complete text field with an <code>AutoCompleteTextField</code>, <code>AutoCompleteTextFormField</code>, or <code>SimpleAutoCompleteTextField</code></p>
+<h5 id="simpleautocompletetextfield-examplehttpsgithubcomfelixlucienflutter-autocomplete-textfieldblobmasterexamplelibviewssimple_exampledart">SimpleAutoCompleteTextField <a href="https://github.com/felixlucien/flutter-autocomplete-textfield/blob/master/example/lib/views/simple_example.dart">example</a></h5>
+<p><code>SimpleAutoCompleteTextField</code> only supports the String type, the default child is a list tile with the title being the value of the suggestion.</p>
+<pre class="language-dart"><code class="language-dart">  final List&lt;String&gt; suggestions = ['Foo', 'Bar', 'Baz', 'Bat', 'Qux', 'Corge', 'Grault', 'Garply', 'Waldo', 'Fred', 'Plugh', 'XYZZY'];
+
+  Widget build(BuildContext context) {
+    return SimpleAutoCompleteTextField(
+      suggestions: suggestions,
+      suggestionLimit: 5,
+      itemFilter: (a, searchTerm) =&gt; a.toLowerCase().startsWith(searchTerm.toLowerCase()),
+      // The 'sorter' parameter is optional, by default suggestions are sorted in ascending 
+      // alphabetical order the following sorts the items in descending alphabetical order
+      sorter: (a, b) =&gt; b.compareTo(a),
+    );
+  }
+</code></pre>
+<h5 id="autocompletetextfield---examplehttpsgithubcomfelixlucienflutter-autocomplete-textfieldblobmasterexamplelibviewscomplex_exampledart">AutoCompleteTextField - <a href="https://github.com/felixlucien/flutter-autocomplete-textfield/blob/master/example/lib/views/complex_example.dart">example</a></h5>
+<h5 id="and-autocompletetextformfield---examplehttpsgithubcomfelixlucienflutter-autocomplete-textfieldblobmasterexamplelibviewsform_exampledart">and AutoCompleteTextFormField - <a href="https://github.com/felixlucien/flutter-autocomplete-textfield/blob/master/example/lib/views/form_example.dart">example</a></h5>
+<ul>
+<li>The <code>query</code> parameter (<code>itemBuilder: (context, query)</code>) is case-sensitive</li>
+<li>Parameters itemBuilder, duration, and onItemSelected are required</li>
+</ul>
+<pre class="language-dart"><code class="language-dart">class Foo {
+  String bar;
+  int baz;
+}
+
+...
+
+Widget build(BuildContext context) {
+  return AutoCompleteTextField&lt;Foo&gt;(
+    onItemSelected: (foo) =&gt; foo.bar,
+    duration: const Duration(milliseconds: 300),
+    itemBuilder: (context, searchTerm) {
+      // Keep in mid searchTerm is case-sensitive and this example expects matching case
+      return (myFoos
+              // Filter out undesired suggestions
+              .where((foo) =&gt; foo.bar.startsWith(searchTerm))
+              .toList()
+            // Sort suggestions
+            ..sort())
+              // Take the amount of suggestions you want to show up, there is no limit and the popup is scrollable
+              .take(10)
+              // convert to AutoCompleteEntry&lt;Foo&gt;'s
+              .map((foo) =&gt; AutoCompleteEntry&lt;Foo&gt;(value: foo, child: ListTile(title: Text(foo.bar))))
+              .toList();
+    } 
+  );
+}
+</code></pre>
+<h1 id="demo">Demo</h1>
+<p><img src="textfield-demo.gif" alt=""></p>
+      </section>
+      
+        <section class="summary">
+            <h2>Libraries</h2>
+          <dl>
+            <dt id="autocomplete_textfield">
+              <span class="name"><a href="autocomplete_textfield/autocomplete_textfield-library.html">autocomplete_textfield</a></span>             
+            </dt>
+            <dd>
+               
+            </dd>
+          </dl>
+        </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    autocomplete_textfield
+      2.0.0
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="static-assets/typeahead.bundle.min.js"></script>
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/URI.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+</body>
+
+</html>

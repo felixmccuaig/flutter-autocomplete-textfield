@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the AutoCompleteTextFormField class from the autocomplete_textfield library, for the Dart programming language.">
+  <title>AutoCompleteTextFormField class - autocomplete_textfield library - Dart API</title>
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../static-assets/github.css">
+  <link rel="stylesheet" href="../static-assets/styles.css">
+  <link rel="icon" href="../static-assets/favicon.png">
+
+</head>
+
+<body data-base-href="../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">autocomplete_textfield</a></li>
+    <li><a href="../autocomplete_textfield/autocomplete_textfield-library.html">autocomplete_textfield</a></li>
+    <li class="self-crumb">AutoCompleteTextFormField<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span> class</li>
+  </ol>
+  <div class="self-name">AutoCompleteTextFormField</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="../index.html">autocomplete_textfield</a></li>
+      <li><a href="../autocomplete_textfield/autocomplete_textfield-library.html">autocomplete_textfield</a></li>
+      <li class="self-crumb">AutoCompleteTextFormField<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span> class</li>
+    </ol>
+    
+    <h5>autocomplete_textfield library</h5>
+    <ol>
+      <li class="section-title"><a href="../autocomplete_textfield/autocomplete_textfield-library.html#classes">Classes</a></li>
+      <li><a href="../autocomplete_textfield/AutoCompleteConfiguration-class.html">AutoCompleteConfiguration</a></li>
+      <li><a href="../autocomplete_textfield/AutoCompleteEntry-class.html">AutoCompleteEntry</a></li>
+      <li><a href="../autocomplete_textfield/AutoCompleteTextField-class.html">AutoCompleteTextField</a></li>
+      <li><a href="../autocomplete_textfield/AutoCompleteTextFormField-class.html">AutoCompleteTextFormField</a></li>
+      <li><a href="../autocomplete_textfield/SimpleAutoCompleteTextField-class.html">SimpleAutoCompleteTextField</a></li>
+      <li><a href="../autocomplete_textfield/TextFieldConfiguration-class.html">TextFieldConfiguration</a></li>
+    
+    
+    
+    
+    
+    
+    
+      <li class="section-title"><a href="../autocomplete_textfield/autocomplete_textfield-library.html#typedefs">Typedefs</a></li>
+      <li><a href="../autocomplete_textfield/AutoCompleteEntryBuilder.html">AutoCompleteEntryBuilder</a></li>
+      <li><a href="../autocomplete_textfield/AutoCompleteEntrySelected.html">AutoCompleteEntrySelected</a></li>
+      <li><a href="../autocomplete_textfield/AutoCompleteErrorBuilder.html">AutoCompleteErrorBuilder</a></li>
+      <li><a href="../autocomplete_textfield/AutoCompleteNoSuggestionsBuilder.html">AutoCompleteNoSuggestionsBuilder</a></li>
+      <li><a href="../autocomplete_textfield/SimpleAutoCompleteTextFilter.html">SimpleAutoCompleteTextFilter</a></li>
+    
+    </ol>
+  </div>
+
+  <div id="dartdoc-main-content" class="col-xs-12 col-sm-9 col-md-8 main-content">
+      <div><h1><span class="kind-class">AutoCompleteTextFormField&lt;<wbr><span class="type-parameter">T</span>&gt;</span> class  </h1></div>
+
+    <section class="desc markdown">
+      <p>A <a href="https://api.flutter.dev/flutter/widgets/FormField-class.html">FormField</a> that contains an <a href="../autocomplete_textfield/AutoCompleteTextFormField-class.html">AutoCompleteTextFormField</a></p>
+<p>This is a convenience widget that wraps an <a href="../autocomplete_textfield/AutoCompleteTextFormField-class.html">AutoCompleteTextFormField</a> widget in a <a href="https://api.flutter.dev/flutter/widgets/FormField-class.html">FormField</a></p>
+<p>A <a href="https://api.flutter.dev/flutter/widgets/Form-class.html">Form</a> ancestor is not required. The <a href="https://api.flutter.dev/flutter/widgets/Form-class.html">Form</a> simply makes it easier to
+save, reset, or validate multiple fields at once. To use without a <a href="https://api.flutter.dev/flutter/widgets/Form-class.html">Form</a>,
+pass a <a href="https://api.flutter.dev/flutter/widgets/GlobalKey-class.html">GlobalKey</a> to the constructor and use <a href="https://api.flutter.dev/flutter/widgets/GlobalKey/currentState.html">GlobalKey.currentState</a> to
+save or reset the form field</p>
+<p>When a <a href="../autocomplete_textfield/AutoCompleteTextFormField/controller.html">controller</a> is specified, its <a href="https://api.flutter.dev/flutter/widgets/TextEditingController/text.html">TextEditingController.text</a>
+defines the <a href="https://api.flutter.dev/flutter/widgets/FormField/initialValue.html">initialValue</a>. If this <a href="https://api.flutter.dev/flutter/widgets/FormField-class.html">FormField</a> is part of a scrolling
+container that lazily constructs its children, like a <a href="https://api.flutter.dev/flutter/widgets/ListView-class.html">ListView</a> or a
+<a href="https://api.flutter.dev/flutter/widgets/CustomScrollView-class.html">CustomScrollView</a>, then a <a href="../autocomplete_textfield/AutoCompleteTextFormField/controller.html">controller</a> should be specified.
+The controller's lifetime should be managed by a stateful widget ancestor
+of the scrolling container</p>
+<p>If a <a href="../autocomplete_textfield/AutoCompleteTextFormField/controller.html">controller</a> is not specified, <a href="https://api.flutter.dev/flutter/widgets/FormField/initialValue.html">initialValue</a> can be used to give
+the automatically generated controller an initial value.</p>
+<p>Remember to call <code>TextEditingController.dispose</code> of the the <a href="https://api.flutter.dev/flutter/widgets/TextEditingController-class.html">TextEditingController</a>
+when it is no longer needed. This will ensure we discard any resources used by the object.</p>
+<p>By default, <code>decoration</code> will apply the <a href="https://api.flutter.dev/flutter/material/ThemeData/inputDecorationTheme.html">ThemeData.inputDecorationTheme</a> for
+the current context to the <a href="https://api.flutter.dev/flutter/material/InputDecoration-class.html">InputDecoration</a>, see
+<a href="https://api.flutter.dev/flutter/material/InputDecoration/applyDefaults.html">InputDecoration.applyDefaults</a>.</p>
+<p>For a documentation about the various parameters, see <a href="https://api.flutter.dev/flutter/material/TextField-class.html">TextField</a> and <a href="../autocomplete_textfield/TextFieldConfiguration-class.html">TextFieldConfiguration</a>.</p>
+    </section>
+    
+    <section>
+      <dl class="dl-horizontal">
+        <dt>Inheritance</dt>
+        <dd><ul class="gt-separated dark clazz-relationships">
+          <li><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></li>
+          <li><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree-class.html">DiagnosticableTree</a></li>
+          <li><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></li>
+          <li><a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a></li>
+          <li><a href="https://api.flutter.dev/flutter/widgets/FormField-class.html">FormField</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></li>
+          <li>AutoCompleteTextFormField</li>
+        </ul></dd>
+
+
+
+
+
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="constructors">
+      <h2>Constructors</h2>
+
+      <dl class="constructor-summary-list">
+        <dt id="AutoCompleteTextFormField" class="callable">
+          <span class="name"><a href="../autocomplete_textfield/AutoCompleteTextFormField/AutoCompleteTextFormField.html">AutoCompleteTextFormField</a></span><span class="signature">(<span class="parameter" id="-param-key">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/Key-class.html">Key</a></span> <span class="parameter-name">key</span>, </span><span class="parameter" id="-param-controller"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/TextEditingController-class.html">TextEditingController</a></span> <span class="parameter-name">controller</span>, </span><span class="parameter" id="-param-focusNode"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/FocusNode-class.html">FocusNode</a></span> <span class="parameter-name">focusNode</span>, </span><span class="parameter" id="-param-initialValue"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">initialValue</span>, </span><span class="parameter" id="-param-duration"><span>@<a href="https://api.flutter.dev/flutter/widgets/required-constant.html">required</a></span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">duration</span>, </span><span class="parameter" id="-param-itemBuilder"><span>@<a href="https://api.flutter.dev/flutter/widgets/required-constant.html">required</a></span> <span class="type-annotation"><a href="../autocomplete_textfield/AutoCompleteEntryBuilder.html">AutoCompleteEntryBuilder</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">itemBuilder</span>, </span><span class="parameter" id="-param-onItemSelected"><span>@<a href="https://api.flutter.dev/flutter/widgets/required-constant.html">required</a></span> <span class="type-annotation"><a href="../autocomplete_textfield/AutoCompleteEntrySelected.html">AutoCompleteEntrySelected</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">onItemSelected</span>, </span><span class="parameter" id="-param-textFieldConfig"><span class="type-annotation"><a href="../autocomplete_textfield/TextFieldConfiguration-class.html">TextFieldConfiguration</a></span> <span class="parameter-name">textFieldConfig</span>: <span class="default-value">const TextFieldConfiguration()</span>, </span><span class="parameter" id="-param-config"><span class="type-annotation"><a href="../autocomplete_textfield/AutoCompleteConfiguration-class.html">AutoCompleteConfiguration</a></span> <span class="parameter-name">config</span>: <span class="default-value">const AutoCompleteConfiguration()</span>, </span><span class="parameter" id="-param-reverseDuration"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">reverseDuration</span>, </span><span class="parameter" id="-param-loadingBuilder"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/WidgetBuilder.html">WidgetBuilder</a></span> <span class="parameter-name">loadingBuilder</span>, </span><span class="parameter" id="-param-errorBuilder"><span class="type-annotation"><a href="../autocomplete_textfield/AutoCompleteErrorBuilder.html">AutoCompleteErrorBuilder</a></span> <span class="parameter-name">errorBuilder</span>, </span><span class="parameter" id="-param-transitionBuilder"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/AnimatedTransitionBuilder.html">AnimatedTransitionBuilder</a></span> <span class="parameter-name">transitionBuilder</span>, </span><span class="parameter" id="-param-noSuggestionsBuilder"><span class="type-annotation"><a href="../autocomplete_textfield/AutoCompleteNoSuggestionsBuilder.html">AutoCompleteNoSuggestionsBuilder</a></span> <span class="parameter-name">noSuggestionsBuilder</span>, </span><span class="parameter" id="-param-onSaved"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/FormFieldSetter.html">FormFieldSetter</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">onSaved</span>, </span><span class="parameter" id="-param-validator"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/FormFieldValidator.html">FormFieldValidator</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">validator</span>, </span><span class="parameter" id="-param-autovalidateMode"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/AutovalidateMode-class.html">AutovalidateMode</a></span> <span class="parameter-name">autovalidateMode</span>}</span>)</span>
+        </dt>
+        <dd>
+           
+        </dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="instance-properties">
+      <h2>Properties</h2>
+
+      <dl class="properties">
+        <dt id="autovalidate" class="property inherited">
+          <span class="name"><a class="deprecated" href="https://api.flutter.dev/flutter/widgets/FormField/autovalidate.html">autovalidate</a></span>
+          <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>         
+        </dt>
+        <dd class="inherited">
+          Used to enable/disable auto validation and update their error
+text. 
+                  <div class="features">@<a href="https://api.flutter.dev/flutter/dart-core/Deprecated-class.html">Deprecated</a>(&#39;Use autoValidateMode parameter which provides more specific &#39; &#39;behavior related to auto validation. &#39; &#39;This feature was deprecated after v1.19.0.&#39;), final, inherited</div>
+</dd>
+        <dt id="autovalidateMode" class="property inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/widgets/FormField/autovalidateMode.html">autovalidateMode</a></span>
+          <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/widgets/AutovalidateMode-class.html">AutovalidateMode</a></span>         
+        </dt>
+        <dd class="inherited">
+          Used to enable/disable this form field auto validation and update its
+error text. <a href="https://api.flutter.dev/flutter/widgets/FormField/autovalidateMode.html">[...]</a>
+                  <div class="features">final, inherited</div>
+</dd>
+        <dt id="builder" class="property inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/widgets/FormField/builder.html">builder</a></span>
+          <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/widgets/FormFieldBuilder.html">FormFieldBuilder</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>         
+        </dt>
+        <dd class="inherited">
+          Function that returns the widget representing this form field. It is
+passed the form field state as input, containing the current value and
+validation state of this field. 
+                  <div class="features">final, inherited</div>
+</dd>
+        <dt id="controller" class="property">
+          <span class="name"><a href="../autocomplete_textfield/AutoCompleteTextFormField/controller.html">controller</a></span>
+          <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/widgets/TextEditingController-class.html">TextEditingController</a></span>         
+        </dt>
+        <dd>
+           
+                  <div class="features">final</div>
+</dd>
+        <dt id="enabled" class="property inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/widgets/FormField/enabled.html">enabled</a></span>
+          <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>         
+        </dt>
+        <dd class="inherited">
+          Whether the form is able to receive user input. <a href="https://api.flutter.dev/flutter/widgets/FormField/enabled.html">[...]</a>
+                  <div class="features">final, inherited</div>
+</dd>
+        <dt id="hashCode" class="property inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">hashCode</a></span>
+          <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>         
+        </dt>
+        <dd class="inherited">
+          The hash code for this object. <a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">[...]</a>
+                  <div class="features">@<a href="https://api.flutter.dev/flutter/foundation/nonVirtual-constant.html">nonVirtual</a>, read-only, inherited</div>
+</dd>
+        <dt id="initialValue" class="property inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/widgets/FormField/initialValue.html">initialValue</a></span>
+          <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>         
+        </dt>
+        <dd class="inherited">
+          An optional value to initialize the form field to, or null otherwise. 
+                  <div class="features">final, inherited</div>
+</dd>
+        <dt id="key" class="property inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">key</a></span>
+          <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/foundation/Key-class.html">Key</a></span>         
+        </dt>
+        <dd class="inherited">
+          Controls how one widget replaces another widget in the tree. <a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">[...]</a>
+                  <div class="features">final, inherited</div>
+</dd>
+        <dt id="onSaved" class="property inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/widgets/FormField/onSaved.html">onSaved</a></span>
+          <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/widgets/FormFieldSetter.html">FormFieldSetter</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>         
+        </dt>
+        <dd class="inherited">
+          An optional method to call with the final value when the form is saved via
+<a href="https://api.flutter.dev/flutter/widgets/FormState/save.html">FormState.save</a>. 
+                  <div class="features">final, inherited</div>
+</dd>
+        <dt id="runtimeType" class="property inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></span>
+          <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Type-class.html">Type</a></span>         
+        </dt>
+        <dd class="inherited">
+          A representation of the runtime type of the object. 
+                  <div class="features">read-only, inherited</div>
+</dd>
+        <dt id="validator" class="property inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/widgets/FormField/validator.html">validator</a></span>
+          <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/widgets/FormFieldValidator.html">FormFieldValidator</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>         
+        </dt>
+        <dd class="inherited">
+          An optional method that validates an input. Returns an error string to
+display if the input is invalid, or null otherwise. <a href="https://api.flutter.dev/flutter/widgets/FormField/validator.html">[...]</a>
+                  <div class="features">final, inherited</div>
+</dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="instance-methods">
+      <h2>Methods</h2>
+      <dl class="callables">
+        <dt id="createElement" class="callable inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/widgets/StatefulWidget/createElement.html">createElement</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/widgets/StatefulElement-class.html">StatefulElement</a></span>
+          </span>
+                  </dt>
+        <dd class="inherited">
+          Creates a <a href="https://api.flutter.dev/flutter/widgets/StatefulElement-class.html">StatefulElement</a> to manage this widget's location in the tree. <a href="https://api.flutter.dev/flutter/widgets/StatefulWidget/createElement.html">[...]</a>
+                  <div class="features">inherited</div>
+</dd>
+        <dt id="createState" class="callable">
+          <span class="name"><a href="../autocomplete_textfield/AutoCompleteTextFormField/createState.html">createState</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/widgets/FormFieldState-class.html">FormFieldState</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
+          </span>
+                  </dt>
+        <dd>
+          Creates the mutable state for this widget at a given location in the tree. <a href="../autocomplete_textfield/AutoCompleteTextFormField/createState.html">[...]</a>
+                  <div class="features">override</div>
+</dd>
+        <dt id="debugDescribeChildren" class="callable inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/debugDescribeChildren.html">debugDescribeChildren</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticsNode-class.html">DiagnosticsNode</a></span>&gt;</span></span>
+          </span>
+                  </dt>
+        <dd class="inherited">
+          Returns a list of <a href="https://api.flutter.dev/flutter/foundation/DiagnosticsNode-class.html">DiagnosticsNode</a> objects describing this node's
+children. <a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/debugDescribeChildren.html">[...]</a>
+                  <div class="features">@<a href="https://api.flutter.dev/flutter/widgets/protected-constant.html">protected</a>, inherited</div>
+</dd>
+        <dt id="debugFillProperties" class="callable inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/widgets/Widget/debugFillProperties.html">debugFillProperties</a></span><span class="signature">(<wbr><span class="parameter" id="debugFillProperties-param-properties"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticPropertiesBuilder-class.html">DiagnosticPropertiesBuilder</a></span> <span class="parameter-name">properties</span></span>)
+            <span class="returntype parameter">&#8594; void</span>
+          </span>
+                  </dt>
+        <dd class="inherited">
+          Add additional properties associated with the node. <a href="https://api.flutter.dev/flutter/widgets/Widget/debugFillProperties.html">[...]</a>
+                  <div class="features">inherited</div>
+</dd>
+        <dt id="noSuchMethod" class="callable inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
+            <span class="returntype parameter">&#8594; dynamic</span>
+          </span>
+                  </dt>
+        <dd class="inherited">
+          Invoked when a non-existent method or property is accessed. <a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">[...]</a>
+                  <div class="features">inherited</div>
+</dd>
+        <dt id="toDiagnosticsNode" class="callable inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toDiagnosticsNode.html">toDiagnosticsNode</a></span><span class="signature">(<wbr><span class="parameter" id="toDiagnosticsNode-param-name">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span><span class="parameter" id="toDiagnosticsNode-param-style"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticsTreeStyle-class.html">DiagnosticsTreeStyle</a></span> <span class="parameter-name">style</span>}</span>)
+            <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/foundation/DiagnosticsNode-class.html">DiagnosticsNode</a></span>
+          </span>
+                  </dt>
+        <dd class="inherited">
+          Returns a debug representation of the object that is used by debugging
+tools and by <a href="https://api.flutter.dev/flutter/foundation/DiagnosticsNode/toStringDeep.html">DiagnosticsNode.toStringDeep</a>. <a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toDiagnosticsNode.html">[...]</a>
+                  <div class="features">inherited</div>
+</dd>
+        <dt id="toString" class="callable inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/foundation/Diagnosticable/toString.html">toString</a></span><span class="signature">(<wbr><span class="parameter" id="toString-param-minLevel">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticLevel-class.html">DiagnosticLevel</a></span> <span class="parameter-name">minLevel</span>: <span class="default-value">DiagnosticLevel.info</span>}</span>)
+            <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+          </span>
+                  </dt>
+        <dd class="inherited">
+          Returns a string representation of this object. 
+                  <div class="features">inherited</div>
+</dd>
+        <dt id="toStringDeep" class="callable inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringDeep.html">toStringDeep</a></span><span class="signature">(<wbr><span class="parameter" id="toStringDeep-param-prefixLineOne">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">prefixLineOne</span>: <span class="default-value">&#39;&#39;</span>, </span><span class="parameter" id="toStringDeep-param-prefixOtherLines"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">prefixOtherLines</span>, </span><span class="parameter" id="toStringDeep-param-minLevel"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticLevel-class.html">DiagnosticLevel</a></span> <span class="parameter-name">minLevel</span>: <span class="default-value">DiagnosticLevel.debug</span>}</span>)
+            <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+          </span>
+                  </dt>
+        <dd class="inherited">
+          Returns a string representation of this node and its descendants. <a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringDeep.html">[...]</a>
+                  <div class="features">inherited</div>
+</dd>
+        <dt id="toStringShallow" class="callable inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringShallow.html">toStringShallow</a></span><span class="signature">(<wbr><span class="parameter" id="toStringShallow-param-joiner">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">joiner</span>: <span class="default-value">&#39;, &#39;</span>, </span><span class="parameter" id="toStringShallow-param-minLevel"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticLevel-class.html">DiagnosticLevel</a></span> <span class="parameter-name">minLevel</span>: <span class="default-value">DiagnosticLevel.debug</span>}</span>)
+            <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+          </span>
+                  </dt>
+        <dd class="inherited">
+          Returns a one-line detailed description of the object. <a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringShallow.html">[...]</a>
+                  <div class="features">inherited</div>
+</dd>
+        <dt id="toStringShort" class="callable inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/widgets/Widget/toStringShort.html">toStringShort</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+          </span>
+                  </dt>
+        <dd class="inherited">
+          A short, textual description of this widget. 
+                  <div class="features">inherited</div>
+</dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor inherited" id="operators">
+      <h2>Operators</h2>
+      <dl class="callables">
+        <dt id="operator ==" class="callable inherited">
+          <span class="name"><a href="https://api.flutter.dev/flutter/widgets/Widget/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
+            <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+          </span>
+                  </dt>
+        <dd class="inherited">
+          The equality operator. <a href="https://api.flutter.dev/flutter/widgets/Widget/operator_equals.html">[...]</a>
+                  <div class="features">@<a href="https://api.flutter.dev/flutter/foundation/nonVirtual-constant.html">nonVirtual</a>, inherited</div>
+</dd>
+      </dl>
+    </section>
+
+
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+    <ol>
+    
+      <li class="section-title"><a href="../autocomplete_textfield/AutoCompleteTextFormField-class.html#constructors">Constructors</a></li>
+      <li><a href="../autocomplete_textfield/AutoCompleteTextFormField/AutoCompleteTextFormField.html">AutoCompleteTextFormField</a></li>
+    
+      <li class="section-title">
+        <a href="../autocomplete_textfield/AutoCompleteTextFormField-class.html#instance-properties">Properties</a>
+      </li>
+      <li class="inherited"><a class="deprecated" href="https://api.flutter.dev/flutter/widgets/FormField/autovalidate.html">autovalidate</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/FormField/autovalidateMode.html">autovalidateMode</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/FormField/builder.html">builder</a></li>
+      <li><a href="../autocomplete_textfield/AutoCompleteTextFormField/controller.html">controller</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/FormField/enabled.html">enabled</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">hashCode</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/FormField/initialValue.html">initialValue</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">key</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/FormField/onSaved.html">onSaved</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/FormField/validator.html">validator</a></li>
+    
+      <li class="section-title"><a href="../autocomplete_textfield/AutoCompleteTextFormField-class.html#instance-methods">Methods</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/StatefulWidget/createElement.html">createElement</a></li>
+      <li><a href="../autocomplete_textfield/AutoCompleteTextFormField/createState.html">createState</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/debugDescribeChildren.html">debugDescribeChildren</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/debugFillProperties.html">debugFillProperties</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toDiagnosticsNode.html">toDiagnosticsNode</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/Diagnosticable/toString.html">toString</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringDeep.html">toStringDeep</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringShallow.html">toStringShallow</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/toStringShort.html">toStringShort</a></li>
+    
+      <li class="section-title inherited"><a href="../autocomplete_textfield/AutoCompleteTextFormField-class.html#operators">Operators</a></li>
+      <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/operator_equals.html">operator ==</a></li>
+    
+    
+    
+    
+    </ol>
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    autocomplete_textfield
+      2.0.0
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="../static-assets/typeahead.bundle.min.js"></script>
+<script src="../static-assets/highlight.pack.js"></script>
+<script src="../static-assets/URI.js"></script>
+<script src="../static-assets/script.js"></script>
+
+
+</body>
+
+</html>
