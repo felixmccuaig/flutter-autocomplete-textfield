@@ -4,5 +4,7 @@
 # This file should be version controlled and should not be manually edited.
 
 version:
-  revision: 226f2c1e99accab83d12bfd49e805f8d7d2d3ed6
-  channel: master
+  revision: 84f3d28555368a70270e9ac8390a9441df95e752
+  channel: stable
+
+project_type: app
