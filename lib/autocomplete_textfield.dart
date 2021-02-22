@@ -33,6 +33,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   final TextCapitalization textCapitalization;
   final TextEditingController controller;
   final FocusNode focusNode;
+  final bool autocorrect;
 
   AutoCompleteTextField(
       {@required
@@ -61,6 +62,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.clearOnSubmit: true, //Clear autoCompleteTextfield on submit
       this.textInputAction: TextInputAction.done,
       this.textCapitalization: TextCapitalization.sentences,
+      this.autocorrect:
+          false, //set the autoroccection on the internal text input field
       this.minLength = 1,
       this.controller,
       this.focusNode})
@@ -112,7 +115,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       keyboardType,
       textInputAction,
       controller,
-      focusNode);
+      focusNode,
+      autocorrect);
 }
 
 class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
@@ -142,6 +146,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   TextStyle style;
   TextInputType keyboardType;
   TextInputAction textInputAction;
+  final bool autocorrect;
 
   AutoCompleteTextFieldState(
       this.suggestions,
@@ -163,7 +168,8 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.keyboardType,
       this.textInputAction,
       this.controller,
-      this.focusNode) {
+      this.focusNode,
+      this.autocorrect) {
     textField = new TextField(
       inputFormatters: inputFormatters,
       textCapitalization: textCapitalization,
@@ -173,6 +179,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       focusNode: focusNode ?? new FocusNode(),
       controller: controller ?? new TextEditingController(),
       textInputAction: textInputAction,
+      autocorrect: autocorrect,
       onChanged: (newText) {
         currentText = newText;
         updateOverlay(newText);
