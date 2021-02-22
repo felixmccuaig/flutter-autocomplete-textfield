@@ -146,7 +146,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   TextStyle style;
   TextInputType keyboardType;
   TextInputAction textInputAction;
-  final bool autocorrect;
+  bool autocorrect;
 
   AutoCompleteTextFieldState(
       this.suggestions,
@@ -455,5 +455,6 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
           keyboardType,
           textInputAction,
           controller,
-          focusNode);
+          focusNode,
+          autocorrect);
 }
