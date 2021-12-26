@@ -21,7 +21,6 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   final ValueSetter<bool> onFocusChanged;
   final InputEventCallback<T> itemSubmitted;
   final AutoCompleteOverlayItemBuilder<T> itemBuilder;
-  //final int suggestionsAmount;
   final GlobalKey<AutoCompleteTextFieldState<T>> key;
   final bool submitOnSuggestionTap, clearOnSubmit;
   final List<TextInputFormatter> inputFormatters;
@@ -55,7 +54,6 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.textSubmitted, //Callback on input text submitted, this is also a string
       this.onFocusChanged,
       this.keyboardType: TextInputType.text,
-      //this.suggestionsAmount:5, //The amount of suggestions to show, larger values may result in them going off screen
       this.submitOnSuggestionTap:
           true, //Call textSubmitted on suggestion tap, itemSubmitted will be called no matter what
       this.clearOnSubmit: true, //Clear autoCompleteTextfield on submit
@@ -128,7 +126,6 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   OverlayEntry listSuggestionsEntry;
   List<T> filteredSuggestions;
   Filter<T> itemFilter;
-  //int suggestionsAmount;
   int minLength;
   bool submitOnSuggestionTap, clearOnSubmit;
   TextEditingController controller;
@@ -152,7 +149,6 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.itemBuilder,
       this.itemSorter,
       this.itemFilter,
-      //this.suggestionsAmount,
       this.submitOnSuggestionTap,
       this.clearOnSubmit,
       this.minLength,
@@ -351,32 +347,20 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       Overlay.of(context).insert(listSuggestionsEntry);
     }
 
-    filteredSuggestions = getSuggestions(
-        suggestions,
-        itemSorter,
-        itemFilter,
-        //suggestionsAmount,
-        query);
+    filteredSuggestions =
+        getSuggestions(suggestions, itemSorter, itemFilter, query);
 
     listSuggestionsEntry.markNeedsBuild();
   }
 
-  List<T> getSuggestions(
-      List<T> suggestions,
-      Comparator<T> sorter,
-      Filter<T> filter,
-      //int maxAmount,
-      String query) {
+  List<T> getSuggestions(List<T> suggestions, Comparator<T> sorter,
+      Filter<T> filter, String query) {
     if (null == query || query.length < minLength) {
       return [];
     }
 
     suggestions = suggestions.where((item) => filter(item, query)).toList();
     suggestions.sort(sorter);
-    //suggestions.sort();
-    // if (suggestions.length > maxAmount) {
-    //   suggestions = suggestions.sublist(0, maxAmount);
-    // }
     return suggestions;
   }
 
@@ -435,7 +419,6 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
             itemBuilder: null,
             itemSorter: null,
             itemFilter: null,
-            //suggestionsAmount: suggestionsAmount,
             submitOnSuggestionTap: submitOnSuggestionTap,
             clearOnSubmit: clearOnSubmit,
             textInputAction: textInputAction,
