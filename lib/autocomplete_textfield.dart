@@ -2,6 +2,7 @@ library autocomplete_textfield;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:math';
 
 typedef Widget AutoCompleteOverlayItemBuilder<T>(
     BuildContext context, T suggestion);
@@ -20,7 +21,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   final ValueSetter<bool> onFocusChanged;
   final InputEventCallback<T> itemSubmitted;
   final AutoCompleteOverlayItemBuilder<T> itemBuilder;
-  final int suggestionsAmount;
+  //final int suggestionsAmount;
   final GlobalKey<AutoCompleteTextFieldState<T>> key;
   final bool submitOnSuggestionTap, clearOnSubmit;
   final List<TextInputFormatter> inputFormatters;
@@ -54,8 +55,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.textSubmitted, //Callback on input text submitted, this is also a string
       this.onFocusChanged,
       this.keyboardType: TextInputType.text,
-      this.suggestionsAmount:
-          5, //The amount of suggestions to show, larger values may result in them going off screen
+      //this.suggestionsAmount:5, //The amount of suggestions to show, larger values may result in them going off screen
       this.submitOnSuggestionTap:
           true, //Call textSubmitted on suggestion tap, itemSubmitted will be called no matter what
       this.clearOnSubmit: true, //Clear autoCompleteTextfield on submit
@@ -101,7 +101,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       itemBuilder,
       itemSorter,
       itemFilter,
-      suggestionsAmount,
+      //suggestionsAmount,
       submitOnSuggestionTap,
       clearOnSubmit,
       minLength,
@@ -128,7 +128,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   OverlayEntry listSuggestionsEntry;
   List<T> filteredSuggestions;
   Filter<T> itemFilter;
-  int suggestionsAmount;
+  //int suggestionsAmount;
   int minLength;
   bool submitOnSuggestionTap, clearOnSubmit;
   TextEditingController controller;
@@ -152,7 +152,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.itemBuilder,
       this.itemSorter,
       this.itemFilter,
-      this.suggestionsAmount,
+      //this.suggestionsAmount,
       this.submitOnSuggestionTap,
       this.clearOnSubmit,
       this.minLength,
@@ -309,56 +309,74 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
                 link: _layerLink,
                 showWhenUnlinked: false,
                 offset: Offset(0.0, height),
-                child: new SizedBox(
-                    width: width,
+                child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minWidth: width,
+                      minHeight: 0,
+                      maxHeight: max(
+                          0,
+                          MediaQuery.of(context).viewInsets.bottom -
+                              height -
+                              15),
+                    ),
                     child: new Card(
+                        child: Scrollbar(
+                      child: SingleChildScrollView(
                         child: new Column(
-                      children: filteredSuggestions.map((suggestion) {
-                        return new Row(children: [
-                          new Expanded(
-                              child: new InkWell(
-                                  child: itemBuilder(context, suggestion),
-                                  onTap: () {
-                                    setState(() {
-                                      if (submitOnSuggestionTap) {
-                                        String newText = suggestion.toString();
-                                        textField.controller.text = newText;
-                                        textField.focusNode.unfocus();
-                                        itemSubmitted(suggestion);
-                                        if (clearOnSubmit) {
-                                          clear();
-                                        }
-                                      } else {
-                                        String newText = suggestion.toString();
-                                        textField.controller.text = newText;
-                                        textChanged(newText);
+                          children: filteredSuggestions.map((suggestion) {
+                            return new InkWell(
+                                child: itemBuilder(context, suggestion),
+                                onTap: () {
+                                  setState(() {
+                                    if (submitOnSuggestionTap) {
+                                      String Text = suggestion.toString();
+                                      textField.controller.text = Text;
+                                      textField.focusNode.unfocus();
+                                      itemSubmitted(suggestion);
+                                      if (clearOnSubmit) {
+                                        clear();
                                       }
-                                    });
-                                  }))
-                        ]);
-                      }).toList(),
+                                    } else {
+                                      String Text = suggestion.toString();
+                                      textField.controller.text = Text;
+                                      textChanged(Text);
+                                    }
+                                  });
+                                });
+                          }).toList(),
+                        ),
+                      ),
                     )))));
       });
       Overlay.of(context).insert(listSuggestionsEntry);
     }
 
     filteredSuggestions = getSuggestions(
-        suggestions, itemSorter, itemFilter, suggestionsAmount, query);
+        suggestions,
+        itemSorter,
+        itemFilter,
+        //suggestionsAmount,
+        query);
 
     listSuggestionsEntry.markNeedsBuild();
   }
 
-  List<T> getSuggestions(List<T> suggestions, Comparator<T> sorter,
-      Filter<T> filter, int maxAmount, String query) {
+  List<T> getSuggestions(
+      List<T> suggestions,
+      Comparator<T> sorter,
+      Filter<T> filter,
+      //int maxAmount,
+      String query) {
     if (null == query || query.length < minLength) {
       return [];
     }
 
     suggestions = suggestions.where((item) => filter(item, query)).toList();
     suggestions.sort(sorter);
-    if (suggestions.length > maxAmount) {
-      suggestions = suggestions.sublist(0, maxAmount);
-    }
+    //suggestions.sort();
+    // if (suggestions.length > maxAmount) {
+    //   suggestions = suggestions.sublist(0, maxAmount);
+    // }
     return suggestions;
   }
 
@@ -372,7 +390,6 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
     if (controller == null) {
       textField.controller.dispose();
     }
-    listSuggestionsEntry?.remove();
     super.dispose();
   }
 
@@ -401,7 +418,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
       TextInputType keyboardType: TextInputType.text,
       @required GlobalKey<AutoCompleteTextFieldState<String>> key,
       @required List<String> suggestions,
-      int suggestionsAmount: 5,
+      //int suggestionsAmount: 10,
       bool submitOnSuggestionTap: true,
       bool clearOnSubmit: true,
       TextInputAction textInputAction: TextInputAction.done,
@@ -418,7 +435,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
             itemBuilder: null,
             itemSorter: null,
             itemFilter: null,
-            suggestionsAmount: suggestionsAmount,
+            //suggestionsAmount: suggestionsAmount,
             submitOnSuggestionTap: submitOnSuggestionTap,
             clearOnSubmit: clearOnSubmit,
             textInputAction: textInputAction,
@@ -437,7 +454,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
       }, (item, query) {
         return item.toLowerCase().startsWith(query.toLowerCase());
       },
-          suggestionsAmount,
+          //suggestionsAmount,
           submitOnSuggestionTap,
           clearOnSubmit,
           minLength,
