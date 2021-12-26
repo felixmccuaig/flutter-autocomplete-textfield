@@ -38,8 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
               title: new Text("Complex Use")),
         ],
         onTap: (index) => setState(() {
-              selectedIndex = index;
-            }),
+          selectedIndex = index;
+        }),
         currentIndex: selectedIndex,
       ),
       body: pages[selectedIndex],
@@ -66,10 +66,10 @@ class _FirstPageState extends State<FirstPage> {
       textChanged: (text) => currentText = text,
       clearOnSubmit: true,
       textSubmitted: (text) => setState(() {
-            if (text != "") {
-              added.add(text);
-            }
-          }),
+        if (text != "") {
+          added.add(text);
+        }
+      }),
     );
   }
 
@@ -132,7 +132,7 @@ class _FirstPageState extends State<FirstPage> {
     }));
 
     return new Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         appBar: new AppBar(
             title: new Text('AutoComplete TextField Demo Simple'),
             actions: [
@@ -236,7 +236,11 @@ class _SecondPageState extends State<SecondPage> {
               title: new Text(suggestion.name),
               trailing: new Text("Stars: ${suggestion.stars}")),
           padding: EdgeInsets.all(8.0)),
-      itemSorter: (a, b) => a.stars == b.stars ? 0 : a.stars > b.stars ? -1 : 1,
+      itemSorter: (a, b) => a.stars == b.stars
+          ? 0
+          : a.stars > b.stars
+              ? -1
+              : 1,
       itemFilter: (suggestion, input) =>
           suggestion.name.toLowerCase().startsWith(input.toLowerCase()),
     );
@@ -245,7 +249,7 @@ class _SecondPageState extends State<SecondPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: new AppBar(
         title: new Text('AutoComplete TextField Demo Complex'),
       ),
