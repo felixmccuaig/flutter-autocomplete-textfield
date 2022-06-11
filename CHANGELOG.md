@@ -12,12 +12,12 @@ Added textInputAction.
 
 ### Breaking Changes [1.4.0]
 
- TextField is set by default to call onSubmitted on a suggestion tap and also to clear the TextField on submit.
+TextField is set by default to call onSubmitted on a suggestion tap and also to clear the TextField on submit.
 
- These can both be disabled with submitOnSuggestionTap and clearOnSubmit respectively.
+These can both be disabled with submitOnSuggestionTap and clearOnSubmit respectively.
 
 [1.4.1]
- Added textCapitalization option
+Added textCapitalization option
 
 [1.5.0]
 
@@ -67,3 +67,6 @@ InputDecoration and styles etc can now be changed dynamically with the updateDec
 
 [1.8.0]
 Added filter advanced with regex in SimpleAutoCompleteTextField
+
+[1.9.0]
+Merge community pull requests, mostly more styling options
