@@ -37,6 +37,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   final Radius cursorRadius;
   final bool showCursor;
   final bool autofocus;
+  final bool autocorrect;
 
   AutoCompleteTextField(
       {@required
@@ -69,6 +70,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.clearOnSubmit: true, //Clear autoCompleteTextfield on submit
       this.textInputAction: TextInputAction.done,
       this.textCapitalization: TextCapitalization.sentences,
+      this.autocorrect:
+          false, //set the autoroccection on the internal text input field
       this.minLength = 1,
       this.controller,
       this.focusNode,
@@ -128,7 +131,9 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       showCursor,
       focusNode,
       autofocus,
-      unFocusOnItemSubmitted);
+      unFocusOnItemSubmitted,
+      focusNode,
+      autocorrect);
 }
 
 class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
@@ -162,6 +167,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   TextStyle style;
   TextInputType keyboardType;
   TextInputAction textInputAction;
+  bool autocorrect;
 
   AutoCompleteTextFieldState(
       this.suggestions,
@@ -189,7 +195,9 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.showCursor,
       this.focusNode,
       this.autofocus,
-      this.unFocusOnItemSubmitted) {
+      this.unFocusOnItemSubmitted,
+      this.focusNode,
+      this.autocorrect) {
     textField = new TextField(
       inputFormatters: inputFormatters,
       textCapitalization: textCapitalization,
@@ -204,6 +212,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       autofocus: autofocus,
       controller: controller ?? new TextEditingController(),
       textInputAction: textInputAction,
+      autocorrect: autocorrect,
       onChanged: (newText) {
         currentText = newText;
         updateOverlay(newText);
@@ -503,5 +512,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
           showCursor,
           focusNode,
           autofocus,
-          unFocusOnItemSubmitted);
+          unFocusOnItemSubmitted,
+          focusNode,
+          autocorrect);
 }
