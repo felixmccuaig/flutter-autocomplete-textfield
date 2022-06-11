@@ -42,6 +42,7 @@ Exposed textField
 Fixed example and new vid thing
 
 [1.6.4]
+
 Added input formatters.
 
 [1.6.7]
@@ -63,3 +64,6 @@ All fields are final now in AutoCompleteTextField.
 
 [1.7.3]
 InputDecoration and styles etc can now be changed dynamically with the updateDecoration() method.
+
+[1.8.0]
+Added filter advanced with regex in SimpleAutoCompleteTextField

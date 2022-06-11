@@ -22,7 +22,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   final AutoCompleteOverlayItemBuilder<T> itemBuilder;
   final int suggestionsAmount;
   final GlobalKey<AutoCompleteTextFieldState<T>> key;
-  final bool submitOnSuggestionTap, clearOnSubmit;
+  final bool submitOnSuggestionTap, clearOnSubmit, unFocusOnItemSubmitted;
   final List<TextInputFormatter> inputFormatters;
   final int minLength;
 
@@ -37,6 +37,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   final double cursorWidth;
   final Radius cursorRadius;
   final bool showCursor;
+  final bool autofocus;
+  
   AutoCompleteTextField(
       {@required
       this.itemSubmitted, //Callback on item selected, this is the item selected of type <T>
@@ -70,8 +72,9 @@ class AutoCompleteTextField<T> extends StatefulWidget {
         this.textCapitalization: TextCapitalization.sentences,
         this.minLength = 1,
         this.controller,
-        this.focusNode})
-      : super(key: key);
+        this.focusNode
+        this.autofocus = false,
+        this.unFocusOnItemSubmitted = true}) : super(key: key);
 
   void clear() => key.currentState.clear();
 
@@ -123,7 +126,10 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       cursorRadius,
       cursorWidth,
       showCursor,
-      focusNode);
+      focusNode,
+      autofocus,
+      unFocusOnItemSubmitted
+  );
 }
 
 class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
@@ -141,9 +147,10 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   Filter<T> itemFilter;
   int suggestionsAmount;
   int minLength;
-  bool submitOnSuggestionTap, clearOnSubmit;
+  bool submitOnSuggestionTap, clearOnSubmit, unFocusOnItemSubmitted;
   TextEditingController controller;
   FocusNode focusNode;
+  bool autofocus;
 
   String currentText = "";
   Color cursorColor;
@@ -181,7 +188,10 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.cursorRadius,
       this.cursorWidth,
       this.showCursor,
-      this.focusNode) {
+      this.focusNode,
+      this.autofocus,
+      this.unFocusOnItemSubmitted
+  ) {
     textField = new TextField(
       inputFormatters: inputFormatters,
       textCapitalization: textCapitalization,
@@ -193,6 +203,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       cursorRadius: cursorRadius ?? const Radius.circular(2.0),
       keyboardType: keyboardType,
       focusNode: focusNode ?? new FocusNode(),
+      autofocus: autofocus,
       controller: controller ?? new TextEditingController(),
       textInputAction: textInputAction,
       onChanged: (newText) {
@@ -267,6 +278,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
         style: this.style,
         keyboardType: this.keyboardType,
         focusNode: focusNode ?? new FocusNode(),
+        autofocus: autofocus,
         controller: controller ?? new TextEditingController(),
         textInputAction: this.textInputAction,
         onChanged: (newText) {
@@ -320,32 +332,35 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   }
 
   void updateOverlay([String query]) {
-    if (listSuggestionsEntry == null) {
+    if (listSuggestionsEntry == null && filteredSuggestions != null) {
       final Size textFieldSize = (context.findRenderObject() as RenderBox).size;
       final width = textFieldSize.width;
       final height = textFieldSize.height;
-      listSuggestionsEntry = new OverlayEntry(builder: (context) {
-        return new Positioned(
+      listSuggestionsEntry = OverlayEntry(builder: (context) {
+        return Positioned(
             width: width,
             child: CompositedTransformFollower(
                 link: _layerLink,
                 showWhenUnlinked: false,
                 offset: Offset(0.0, height),
-                child: new SizedBox(
+                child: SizedBox(
                     width: width,
-                    child: new Card(
+                    child: Card(
                         child: new Column(
-                          children: filteredSuggestions.map((suggestion) {
-                            return new Row(children: [
-                              new Expanded(
-                                  child: new InkWell(
-                                      child: itemBuilder(context, suggestion),
-                                      onTap: () {
-                                        setState(() {
-                                          if (submitOnSuggestionTap) {
+                      children: filteredSuggestions.map((suggestion) {
+                        return Row(children: [
+                          Expanded(
+                              child: InkWell(
+                                  child: itemBuilder(context, suggestion),
+                                  onTap: () {
+                                    if (!this.mounted) return;
+                                    setState(() {
+                                      if (submitOnSuggestionTap) {
                                             String newText = suggestion.toString();
                                             textField.controller.text = newText;
-                                            textField.focusNode.unfocus();
+                                            if (unFocusOnItemSubmitted) {
+                                              textField.focusNode.unfocus();
+                                            }
                                             itemSubmitted(suggestion);
                                             if (clearOnSubmit) {
                                               clear();
@@ -355,11 +370,11 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
                                             textField.controller.text = newText;
                                             textChanged(newText);
                                           }
-                                        });
-                                      }))
-                            ]);
-                          }).toList(),
-                        )))));
+                                    });
+                                  }))
+                        ]);
+                      }).toList(),
+                    )))));
       });
       Overlay.of(context).insert(listSuggestionsEntry);
     }
@@ -367,7 +382,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
     filteredSuggestions = getSuggestions(
         suggestions, itemSorter, itemFilter, suggestionsAmount, query);
 
-    listSuggestionsEntry.markNeedsBuild();
+    listSuggestionsEntry?.markNeedsBuild();
   }
 
   List<T> getSuggestions(List<T> suggestions, Comparator<T> sorter,
@@ -413,6 +428,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
   final double cursorWidth;
   final Radius cursorRadius;
   final bool showCursor;
+  final bool autofocus;
 
   SimpleAutoCompleteTextField(
       {TextStyle style,
@@ -423,6 +439,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
         this.minLength = 1,
         this.controller,
         this.focusNode,
+        this.autofocus = false,
         this.cursorColor,
         this.cursorWidth,
         this.cursorRadius,
@@ -459,31 +476,35 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
 
   @override
   State<StatefulWidget> createState() => new AutoCompleteTextFieldState<String>(
-      suggestions,
-      textChanged,
-      textSubmitted,
-      onFocusChanged,
-      itemSubmitted, (context, item) {
-    return new Padding(padding: EdgeInsets.all(8.0), child: new Text(item));
-  }, (a, b) {
-    return a.compareTo(b);
-  }, (item, query) {
-    return item.toLowerCase().startsWith(query.toLowerCase());
-  },
-      suggestionsAmount,
-      submitOnSuggestionTap,
-      clearOnSubmit,
-      minLength,
-      [],
-      textCapitalization,
-      decoration,
-      style,
-      keyboardType,
-      textInputAction,
-      controller,
-      cursorColor,
-      cursorRadius,
-      cursorWidth,
-      showCursor,
-      focusNode);
+          suggestions,
+          textChanged,
+          textSubmitted,
+          onFocusChanged,
+          itemSubmitted, (context, item) {
+        return new Padding(padding: EdgeInsets.all(8.0), child: new Text(item));
+      }, (a, b) {
+        return a.compareTo(b);
+      }, (item, query) {
+        final regex = RegExp(query, caseSensitive: false);
+        return regex.hasMatch(item?.toLowerCase());
+      },
+          suggestionsAmount,
+          submitOnSuggestionTap,
+          clearOnSubmit,
+          minLength,
+          [],
+          textCapitalization,
+          decoration,
+          style,
+          keyboardType,
+          textInputAction,
+          controller,
+          cursorColor,
+          cursorRadius,
+          cursorWidth,
+          showCursor,
+          focusNode,
+          autofocus,
+          unFocusOnItemSubmitted
+  );
 }
