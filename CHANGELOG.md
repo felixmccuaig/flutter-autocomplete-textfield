@@ -70,3 +70,6 @@ Added filter advanced with regex in SimpleAutoCompleteTextField
 
 [1.9.0]
 Merge community pull requests, mostly more styling options
+
+[2.0.0]
+Add null safety
