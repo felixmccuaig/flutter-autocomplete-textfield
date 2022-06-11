@@ -32,10 +32,12 @@ class _MyHomePageState extends State<MyHomePage> {
         items: [
           new BottomNavigationBarItem(
               icon: new Center(child: new Text("1")),
-              title: new Text("Simple Use")),
+              label: "Simple Use",
+          ),
           new BottomNavigationBarItem(
               icon: new Center(child: new Text("2")),
-              title: new Text("Complex Use")),
+              label: "Complex Use"
+          )
         ],
         onTap: (index) => setState(() {
               selectedIndex = index;
@@ -132,7 +134,6 @@ class _FirstPageState extends State<FirstPage> {
     }));
 
     return new Scaffold(
-        resizeToAvoidBottomPadding: false,
         appBar: new AppBar(
             title: new Text('AutoComplete TextField Demo Simple'),
             actions: [
@@ -245,7 +246,6 @@ class _SecondPageState extends State<SecondPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
         title: new Text('AutoComplete TextField Demo Complex'),
       ),
