@@ -1,5 +1,6 @@
 name: example
 description: A new Flutter project.
+author: Felix McCuaig <felixmccuaigdev@gmail.com>
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -12,7 +13,7 @@ description: A new Flutter project.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # Read more about versioning at semver.org.
-version: 1.0.0+2
+version: 1.0.0+3
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
