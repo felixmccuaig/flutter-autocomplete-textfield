@@ -33,6 +33,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   final TextCapitalization textCapitalization;
   final TextEditingController controller;
   final FocusNode focusNode;
+  final bool autofocus;
 
   AutoCompleteTextField(
       {@required
@@ -64,6 +65,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.minLength = 1,
       this.controller,
       this.focusNode,
+      this.autofocus = false,
       this.unFocusOnItemSubmitted = true})
       : super(key: key);
 
@@ -114,7 +116,9 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       textInputAction,
       controller,
       focusNode,
-      unFocusOnItemSubmitted);
+      autofocus,
+      unFocusOnItemSubmitted
+  );
 }
 
 class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
@@ -135,6 +139,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   bool submitOnSuggestionTap, clearOnSubmit, unFocusOnItemSubmitted;
   TextEditingController controller;
   FocusNode focusNode;
+  bool autofocus;
 
   String currentText = "";
 
@@ -166,7 +171,9 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.textInputAction,
       this.controller,
       this.focusNode,
-      this.unFocusOnItemSubmitted) {
+      this.autofocus,
+      this.unFocusOnItemSubmitted
+  ) {
     textField = new TextField(
       inputFormatters: inputFormatters,
       textCapitalization: textCapitalization,
@@ -174,6 +181,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       style: style,
       keyboardType: keyboardType,
       focusNode: focusNode ?? new FocusNode(),
+      autofocus: autofocus,
       controller: controller ?? new TextEditingController(),
       textInputAction: textInputAction,
       onChanged: (newText) {
@@ -248,6 +256,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
         style: this.style,
         keyboardType: this.keyboardType,
         focusNode: focusNode ?? new FocusNode(),
+        autofocus: autofocus,
         controller: controller ?? new TextEditingController(),
         textInputAction: this.textInputAction,
         onChanged: (newText) {
@@ -393,6 +402,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
   final ValueSetter<bool> onFocusChanged;
   final TextEditingController controller;
   final FocusNode focusNode;
+  final bool autofocus;
 
   SimpleAutoCompleteTextField(
       {TextStyle style,
@@ -403,6 +413,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
       this.minLength = 1,
       this.controller,
       this.focusNode,
+      this.autofocus = false,
       TextInputType keyboardType: TextInputType.text,
       @required GlobalKey<AutoCompleteTextFieldState<String>> key,
       @required List<String> suggestions,
@@ -455,5 +466,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
           textInputAction,
           controller,
           focusNode,
-          unFocusOnItemSubmitted);
+          autofocus,
+          unFocusOnItemSubmitted
+  );
 }
