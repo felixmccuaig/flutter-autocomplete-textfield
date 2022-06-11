@@ -132,7 +132,6 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       focusNode,
       autofocus,
       unFocusOnItemSubmitted,
-      focusNode,
       autocorrect);
 }
 
@@ -196,7 +195,6 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.focusNode,
       this.autofocus,
       this.unFocusOnItemSubmitted,
-      this.focusNode,
       this.autocorrect) {
     textField = new TextField(
       inputFormatters: inputFormatters,
@@ -513,6 +511,5 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
           focusNode,
           autofocus,
           unFocusOnItemSubmitted,
-          focusNode,
           autocorrect);
 }
