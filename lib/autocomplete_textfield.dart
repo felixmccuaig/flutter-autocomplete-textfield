@@ -226,7 +226,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
           triggerSubmitted(submittedText: submittedText),
     );
 
-    if (this.controller != null && this.controller!.text != null) {
+    if (this.controller != null) {
       currentText = this.controller!.text;
     }
 
@@ -238,7 +238,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       if (!textField!.focusNode!.hasFocus) {
         filteredSuggestions = [];
         updateOverlay();
-      } else if (!(currentText == "" || currentText == null)) {
+      } else if (currentText != "") {
         updateOverlay(currentText);
       }
     });
@@ -490,9 +490,6 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
       }, (a, b) {
         return a.compareTo(b);
       }, (item, query) {
-        if(item == null || query == null) {
-          return false;
-        }
         final regex = RegExp(query, caseSensitive: false);
         return regex.hasMatch(item.toLowerCase());
       },
