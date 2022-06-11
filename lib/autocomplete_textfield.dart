@@ -22,7 +22,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   final AutoCompleteOverlayItemBuilder<T> itemBuilder;
   final int suggestionsAmount;
   final GlobalKey<AutoCompleteTextFieldState<T>> key;
-  final bool submitOnSuggestionTap, clearOnSubmit;
+  final bool submitOnSuggestionTap, clearOnSubmit, unFocusOnItemSubmitted;
   final List<TextInputFormatter> inputFormatters;
   final int minLength;
 
@@ -33,6 +33,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   final TextCapitalization textCapitalization;
   final TextEditingController controller;
   final FocusNode focusNode;
+  final bool autofocus;
 
   AutoCompleteTextField(
       {@required
@@ -63,7 +64,9 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.textCapitalization: TextCapitalization.sentences,
       this.minLength = 1,
       this.controller,
-      this.focusNode})
+      this.focusNode,
+      this.autofocus = false,
+      this.unFocusOnItemSubmitted = true})
       : super(key: key);
 
   void clear() => key.currentState.clear();
@@ -112,7 +115,10 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       keyboardType,
       textInputAction,
       controller,
-      focusNode);
+      focusNode,
+      autofocus,
+      unFocusOnItemSubmitted
+  );
 }
 
 class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
@@ -130,9 +136,10 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   Filter<T> itemFilter;
   int suggestionsAmount;
   int minLength;
-  bool submitOnSuggestionTap, clearOnSubmit;
+  bool submitOnSuggestionTap, clearOnSubmit, unFocusOnItemSubmitted;
   TextEditingController controller;
   FocusNode focusNode;
+  bool autofocus;
 
   String currentText = "";
 
@@ -163,7 +170,10 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.keyboardType,
       this.textInputAction,
       this.controller,
-      this.focusNode) {
+      this.focusNode,
+      this.autofocus,
+      this.unFocusOnItemSubmitted
+  ) {
     textField = new TextField(
       inputFormatters: inputFormatters,
       textCapitalization: textCapitalization,
@@ -171,6 +181,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       style: style,
       keyboardType: keyboardType,
       focusNode: focusNode ?? new FocusNode(),
+      autofocus: autofocus,
       controller: controller ?? new TextEditingController(),
       textInputAction: textInputAction,
       onChanged: (newText) {
@@ -245,6 +256,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
         style: this.style,
         keyboardType: this.keyboardType,
         focusNode: focusNode ?? new FocusNode(),
+        autofocus: autofocus,
         controller: controller ?? new TextEditingController(),
         textInputAction: this.textInputAction,
         onChanged: (newText) {
@@ -324,7 +336,9 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
                                       if (submitOnSuggestionTap) {
                                         String newText = suggestion.toString();
                                         textField.controller.text = newText;
-                                        textField.focusNode.unfocus();
+                                        if (unFocusOnItemSubmitted) {
+                                          textField.focusNode.unfocus();
+                                        }
                                         itemSubmitted(suggestion);
                                         if (clearOnSubmit) {
                                           clear();
@@ -389,6 +403,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
   final ValueSetter<bool> onFocusChanged;
   final TextEditingController controller;
   final FocusNode focusNode;
+  final bool autofocus;
 
   SimpleAutoCompleteTextField(
       {TextStyle style,
@@ -399,6 +414,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
       this.minLength = 1,
       this.controller,
       this.focusNode,
+      this.autofocus = false,
       TextInputType keyboardType: TextInputType.text,
       @required GlobalKey<AutoCompleteTextFieldState<String>> key,
       @required List<String> suggestions,
@@ -436,7 +452,8 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
       }, (a, b) {
         return a.compareTo(b);
       }, (item, query) {
-        return item.toLowerCase().startsWith(query.toLowerCase());
+        final regex = RegExp(query, caseSensitive: false);
+        return regex.hasMatch(item?.toLowerCase());
       },
           suggestionsAmount,
           submitOnSuggestionTap,
@@ -449,5 +466,8 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
           keyboardType,
           textInputAction,
           controller,
-          focusNode);
+          focusNode,
+          autofocus,
+          unFocusOnItemSubmitted
+  );
 }
