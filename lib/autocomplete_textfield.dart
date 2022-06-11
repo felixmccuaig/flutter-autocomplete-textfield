@@ -490,8 +490,11 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
       }, (a, b) {
         return a.compareTo(b);
       }, (item, query) {
+        if(item == null || query == null) {
+          return false;
+        }
         final regex = RegExp(query, caseSensitive: false);
-        return regex.hasMatch(item?.toLowerCase());
+        return regex.hasMatch(item.toLowerCase());
       },
           suggestionsAmount,
           submitOnSuggestionTap,

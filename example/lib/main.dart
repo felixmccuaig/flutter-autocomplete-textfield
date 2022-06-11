@@ -215,7 +215,7 @@ class _SecondPageState extends State<SecondPage> {
         "https://media-cdn.tripadvisor.com/media/photo-s/0e/1f/55/79/and-here-we-go.jpg")
   ];
 
-  GlobalKey key =
+  GlobalKey<AutoCompleteTextFieldState<ArbitrarySuggestionType>> key =
       GlobalKey<AutoCompleteTextFieldState<ArbitrarySuggestionType>>();
 
   AutoCompleteTextField<ArbitrarySuggestionType>? textField;
