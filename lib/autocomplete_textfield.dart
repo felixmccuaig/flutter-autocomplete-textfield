@@ -22,7 +22,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   final AutoCompleteOverlayItemBuilder<T> itemBuilder;
   final int suggestionsAmount;
   final GlobalKey<AutoCompleteTextFieldState<T>> key;
-  final bool submitOnSuggestionTap, clearOnSubmit;
+  final bool submitOnSuggestionTap, clearOnSubmit, unFocusOnItemSubmitted;
   final List<TextInputFormatter> inputFormatters;
   final int minLength;
 
@@ -65,7 +65,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.minLength = 1,
       this.controller,
       this.focusNode,
-      this.autofocus = false})
+      this.autofocus = false,
+      this.unFocusOnItemSubmitted = true})
       : super(key: key);
 
   void clear() => key.currentState.clear();
@@ -115,7 +116,9 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       textInputAction,
       controller,
       focusNode,
-      autofocus);
+      autofocus,
+      unFocusOnItemSubmitted
+  );
 }
 
 class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
@@ -133,7 +136,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   Filter<T> itemFilter;
   int suggestionsAmount;
   int minLength;
-  bool submitOnSuggestionTap, clearOnSubmit;
+  bool submitOnSuggestionTap, clearOnSubmit, unFocusOnItemSubmitted;
   TextEditingController controller;
   FocusNode focusNode;
   bool autofocus;
@@ -168,7 +171,9 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.textInputAction,
       this.controller,
       this.focusNode,
-      this.autofocus) {
+      this.autofocus,
+      this.unFocusOnItemSubmitted
+  ) {
     textField = new TextField(
       inputFormatters: inputFormatters,
       textCapitalization: textCapitalization,
@@ -330,7 +335,9 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
                                       if (submitOnSuggestionTap) {
                                         String newText = suggestion.toString();
                                         textField.controller.text = newText;
-                                        textField.focusNode.unfocus();
+                                        if (unFocusOnItemSubmitted) {
+                                          textField.focusNode.unfocus();
+                                        }
                                         itemSubmitted(suggestion);
                                         if (clearOnSubmit) {
                                           clear();
@@ -444,7 +451,8 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
       }, (a, b) {
         return a.compareTo(b);
       }, (item, query) {
-        return item.toLowerCase().startsWith(query.toLowerCase());
+        final regex = RegExp(query, caseSensitive: false);
+        return regex.hasMatch(item?.toLowerCase());
       },
           suggestionsAmount,
           submitOnSuggestionTap,
@@ -458,5 +466,7 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
           textInputAction,
           controller,
           focusNode,
-          autofocus);
+          autofocus,
+          unFocusOnItemSubmitted
+  );
 }
