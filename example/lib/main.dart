@@ -110,7 +110,7 @@ class _FirstPageState extends State<FirstPage> {
     "Zest"
   ];
 
-  SimpleAutoCompleteTextField textField;
+  SimpleAutoCompleteTextField? textField;
   bool showWhichErrorText = false;
 
   @override
@@ -121,9 +121,9 @@ class _FirstPageState extends State<FirstPage> {
           trailing: IconButton(
               icon: Icon(Icons.add),
               onPressed: () {
-                textField.triggerSubmitted();
+                textField!.triggerSubmitted();
                 showWhichErrorText = !showWhichErrorText;
-                textField.updateDecoration(
+                textField!.updateDecoration(
                     decoration: InputDecoration(
                         errorText: showWhichErrorText ? "Beans" : "Tomatoes"));
               })),
@@ -150,7 +150,7 @@ class _FirstPageState extends State<FirstPage> {
                             onPressed: () {
                               if (text != "") {
                                 suggestions.add(text);
-                                textField.updateSuggestions(suggestions);
+                                textField!.updateSuggestions(suggestions);
                               }
                               Navigator.pop(context);
                             },
@@ -218,9 +218,9 @@ class _SecondPageState extends State<SecondPage> {
   GlobalKey key =
       GlobalKey<AutoCompleteTextFieldState<ArbitrarySuggestionType>>();
 
-  AutoCompleteTextField<ArbitrarySuggestionType> textField;
+  AutoCompleteTextField<ArbitrarySuggestionType>? textField;
 
-  ArbitrarySuggestionType selected;
+  ArbitrarySuggestionType? selected;
 
   _SecondPageState() {
     textField = AutoCompleteTextField<ArbitrarySuggestionType>(
@@ -259,10 +259,10 @@ class _SecondPageState extends State<SecondPage> {
                 child: selected != null
                     ? Column(children: [
                         ListTile(
-                            title: Text(selected.name),
-                            trailing: Text("Rating: ${selected.stars}/5")),
+                            title: Text(selected!.name),
+                            trailing: Text("Rating: ${selected!.stars}/5")),
                         Container(
-                            child: Image(image: NetworkImage(selected.imgURL)),
+                            child: Image(image: NetworkImage(selected!.imgURL)),
                             width: 400.0,
                             height: 300.0)
                       ])
