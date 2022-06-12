@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 5.1.0-dev">
+  <meta name="description" content="autocomplete_textfield API docs, for the Dart programming language.">
+  <title>autocomplete_textfield - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href=""
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="https://github.com/felixlucien/flutter-autocomplete-textfield">autocomplete_textfield package</a></li>
+  </ol>
+  <div class="self-name">autocomplete_textfield</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="autocomplete_textfield">autocomplete_textfield</h1>
+<p>An autocomplete textfield for flutter</p>
+<h1 id="pull-requests">pull requests</h1>
+<p>Feel free to submit pull requests for desired changes / features / bug fixes... It makes the maintenance of this code much easier as I no longer use Flutter frequently.</p>
+<h2 id="pub-package-can-be-found-at">Pub Package Can Be Found At</h2>
+<p><a href="https://pub.dartlang.org/packages/autocomplete_textfield#-example-tab-">Pub Package</a></p>
+<h2 id="breaking-changes">Breaking Changes</h2>
+<p>TextField is set by default to call onSubmitted on a suggestion tap and also to clear the TextField on submit.</p>
+<p>These can both be disabled with submitOnSuggestionTap and clearOnSubmit respectively.</p>
+<h2 id="usage">Usage</h2>
+<p>AutoCompleteTextField supports any data type suggestions</p>
+<pre class="language-dart"><code class="language-dart"> new AutoCompleteTextField&lt;YOURDATATYPE&gt;()
+</code></pre>
+<p>The suggestions parameter must have data that matches <code>&lt;YOURDATATYPE&gt;</code></p>
+<p>A global key of type <code>GlobalKey&lt;AutoCompleteTextFieldState&lt;T&gt;&gt;</code> is required so that the <code>clear()</code> method can be called to clear AutoCompleteTextField.</p>
+<h1 id="strings-and-itemfilter">Strings and itemFilter</h1>
+<p>Filtering is case sensitive so when using strings a common implementation of itemFilter is .</p>
+<pre class="language-dart"><code class="language-dart">itemFilter: (item, query) {
+  return item.toLowerCase().startsWith(query.toLowerCase());
+}
+</code></pre><img src="textfield-demo.gif" width="300">
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="autocomplete_textfield">
+  <span class="name"><a href="autocomplete_textfield/autocomplete_textfield-library.html">autocomplete_textfield</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+        </dl>
+      </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="https://github.com/felixlucien/flutter-autocomplete-textfield">autocomplete_textfield package</a></li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">autocomplete_textfield</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="autocomplete_textfield/autocomplete_textfield-library.html">autocomplete_textfield</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    autocomplete_textfield
+      2.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+
