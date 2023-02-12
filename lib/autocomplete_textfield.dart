@@ -355,28 +355,30 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
                       children: filteredSuggestions!.map((suggestion) {
                         return Row(children: [
                           Expanded(
-                              child: InkWell(
-                                  child: itemBuilder!(context, suggestion),
-                                  onTap: () {
-                                    if (!this.mounted) return;
-                                    setState(() {
-                                      if (submitOnSuggestionTap) {
-                                        String newText = suggestion.toString();
-                                        textField!.controller!.text = newText;
-                                        if (unFocusOnItemSubmitted) {
-                                          textField!.focusNode!.unfocus();
+                              child: TextFieldTapRegion(
+                                child: InkWell(
+                                    child: itemBuilder!(context, suggestion),
+                                    onTap: () {
+                                      if (!this.mounted) return;
+                                      setState(() {
+                                        if (submitOnSuggestionTap) {
+                                          String newText = suggestion.toString();
+                                          textField!.controller!.text = newText;
+                                          if (unFocusOnItemSubmitted) {
+                                            textField!.focusNode!.unfocus();
+                                          }
+                                          itemSubmitted!(suggestion);
+                                          if (clearOnSubmit) {
+                                            clear();
+                                          }
+                                        } else {
+                                          String newText = suggestion.toString();
+                                          textField!.controller!.text = newText;
+                                          textChanged!(newText);
                                         }
-                                        itemSubmitted!(suggestion);
-                                        if (clearOnSubmit) {
-                                          clear();
-                                        }
-                                      } else {
-                                        String newText = suggestion.toString();
-                                        textField!.controller!.text = newText;
-                                        textChanged!(newText);
-                                      }
-                                    });
-                                  }))
+                                      });
+                                    }),
+                              ))
                         ]);
                       }).toList(),
                     )))));
